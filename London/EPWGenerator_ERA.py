@@ -246,44 +246,42 @@ timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,656
 '''
 # Toronto
 # '''
-#lat_rural = 43.67967
-#lon_rural = -79.86907
-#GMT = -5
+lat_rural = 42.976
+lon_rural = -81.471
+GMT = -5
 # For cities west of UK the starting row for writing data is as follows,
 # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
 timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
 
-#London, ON
-lat_rural = 42.976
-lon_rural = -81.471
-GMT = -5 
-
 StartingTime_ERA5 = '1981-01-01'
-EndingTime_ERA5 = '1981-12-30'
+EndingTime_ERA5 = '1981-01-31'
 
 # '''
 # Always the content from the NewEPW_file are appended to the RawEPW_file
 # So for appending of consecutive periods to an existing EPW file,
 # keep updating the RawEPW_file to the latest file created in the last step
-#RawEPW_file = 'ERA5_Toronto_Jan_Aug2015.epw'
-#NewEPW_file = 'ERA5_Toronto_Jan_Dec2015.epw'
-#ERA5land_file = 'Toronto\ERA5Land\ERA5Land_Sep_Oct_Nov_Dec_2015.nc'
-#ERA5_file = 'Toronto\ERA5\ERA5_Sep_Oct_Nov_Dec _2015.nc'
-
-RawEPW_file = 'rawEPWfile.epw'
-NewEPW_file = 'ERA5_1981_Jan.epw'
-ERA5land_file = 'London/ERA5Land/ERA5Land_1981_Jan.nc'
-ERA5_file = 'London/ERA5/ERA5_1981_Jan.nc'
-
-# Number of decimal points for writing the data, except for precipitattion. DO NOT CHANGE
+RawEPW_file = 'rawEPW_File.epw'
+NewEPW_file = 'ERA5_London_Jan1981.epw'
+ERA5land_file = 'ERA5Land/ERA5Land_1981_Jan.nc'
+ERA5_file = 'ERA5/ERA5_1981_Jan.nc'
+# # Number of decimal points for writing the data, except for precipitattion. DO NOT CHANGE
 epw_precision = 1
-# Starting row at which the new information will be written in the EPW file. Select the appropriate month
+# # Starting row at which the new information will be written in the EPW file. Select the appropriate month
 
 
 write_epw(StartingTime_ERA5,EndingTime_ERA5,lat_rural,lon_rural,GMT,RawEPW_file,NewEPW_file,ERA5land_file,ERA5_file,epw_precision,timeInitial)
 
-
-
-
-
-
+# year = "1983"
+# # Testing to see if i can speed up the process
+# write_epw(year+"-01-01",year+"-01-31",lat_rural,lon_rural,GMT,"rawEPW.epw","ERA5_London_Jan"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jan.nc","ERA5/ERA5_"+year+"_Jan.nc",1,8)
+# write_epw(year+"-02-01",year+"-02-28",lat_rural,lon_rural,GMT,"ERA5_London_Jan"+year+".epw","ERA5_London_Feb"+year+".epw","ERA5Land/ERA5Land_"+year+"_Feb.nc","ERA5/ERA5_"+year+"_Feb.nc",1,752)
+# write_epw(year+"-03-01",year+"-03-31",lat_rural,lon_rural,GMT,"ERA5_London_Feb"+year+".epw","ERA5_London_Mar"+year+".epw","ERA5Land/ERA5Land_"+year+"_Mar.nc","ERA5/ERA5_"+year+"_Mar.nc",1,1424)
+# write_epw(year+"-04-01",year+"-04-30",lat_rural,lon_rural,GMT,"ERA5_London_Mar"+year+".epw","ERA5_London_Apr"+year+".epw","ERA5Land/ERA5Land_"+year+"_Apr.nc","ERA5/ERA5_"+year+"_Apr.nc",1,2168)
+# write_epw(year+"-05-01",year+"-05-31",lat_rural,lon_rural,GMT,"ERA5_London_Apr"+year+".epw","ERA5_London_May"+year+".epw","ERA5Land/ERA5Land_"+year+"_May.nc","ERA5/ERA5_"+year+"_May.nc",1,2888)
+# write_epw(year+"-06-01",year+"-06-30",lat_rural,lon_rural,GMT,"ERA5_London_May"+year+".epw","ERA5_London_Jun"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jun.nc","ERA5/ERA5_"+year+"_Jun.nc",1,3632)
+# write_epw(year+"-07-01",year+"-07-31",lat_rural,lon_rural,GMT,"ERA5_London_Jun"+year+".epw","ERA5_London_Jul"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jul.nc","ERA5/ERA5_"+year+"_Jul.nc",1,4352)
+# write_epw(year+"-08-01",year+"-08-31",lat_rural,lon_rural,GMT,"ERA5_London_Jul"+year+".epw","ERA5_London_Aug"+year+".epw","ERA5Land/ERA5Land_"+year+"_Aug.nc","ERA5/ERA5_"+year+"_Aug.nc",1,5096)
+# write_epw(year+"-09-01",year+"-09-30",lat_rural,lon_rural,GMT,"ERA5_London_Aug"+year+".epw","ERA5_London_Sep"+year+".epw","ERA5Land/ERA5Land_"+year+"_Sep.nc","ERA5/ERA5_"+year+"_Sep.nc",1,5840)
+# write_epw(year+"-10-01",year+"-10-31",lat_rural,lon_rural,GMT,"ERA5_London_Sep"+year+".epw","ERA5_London_Oct"+year+".epw","ERA5Land/ERA5Land_"+year+"_Oct.nc","ERA5/ERA5_"+year+"_Oct.nc",1,6560)
+# write_epw(year+"-11-01",year+"-11-30",lat_rural,lon_rural,GMT,"ERA5_London_Oct"+year+".epw","ERA5_London_Nov"+year+".epw","ERA5Land/ERA5Land_"+year+"_Nov.nc","ERA5/ERA5_"+year+"_Nov.nc",1,7304)
+# write_epw(year+"-12-01",year+"-12-31",lat_rural,lon_rural,GMT,"ERA5_London_Nov"+year+".epw","ERA5_London_Dec"+year+".epw","ERA5Land/ERA5Land_"+year+"_Dec.nc","ERA5/ERA5_"+year+"_Dec.nc",1,8023)
