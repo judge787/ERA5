@@ -272,7 +272,7 @@ GMT = -5
 
 # write_epw(StartingTime_ERA5,EndingTime_ERA5,lat_rural,lon_rural,GMT,RawEPW_file,NewEPW_file,ERA5land_file,ERA5_file,epw_precision,timeInitial)
 
-year = "1999"
+year = "1998"
 # Testing to see if i can speed up the process
 write_epw(year+"-01-01",year+"-01-31",lat_rural,lon_rural,GMT,"rawEPW.epw","ERA5_London_Jan"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jan.nc","ERA5/ERA5_"+year+"_Jan.nc",1,8)
 write_epw(year+"-02-01",year+"-02-28",lat_rural,lon_rural,GMT,"ERA5_London_Jan"+year+".epw","ERA5_London_Feb"+year+".epw","ERA5Land/ERA5Land_"+year+"_Feb.nc","ERA5/ERA5_"+year+"_Feb.nc",1,752)
