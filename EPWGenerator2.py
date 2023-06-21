@@ -304,8 +304,8 @@ months = ["January","February","March","April","May","June","July","August","Sep
 
 #IMPORTANT: For a range of years 1980-1999 please enter range(1980,2000)
 #IMPORTANT: For only a single year, for example 1980, please enter range(1980,1981)
-for year in range(1979, 1980):
-    city = "Montreal" 
+for year in range(1990, 1991):
+    city = "Guelph" 
 
     # # Testing to see if i can speed up the process
 
@@ -338,7 +338,7 @@ for year in range(1979, 1980):
         successCount += 1
         write_epw(str(year)+"-12-01",str(year)+"-12-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Nov"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Dec"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Dec.nc","ERA5/ERA5_"+str(year)+"_Dec.nc",1,8023)
         successCount += 1
-        print("Successfully Created EPW Files for "+str(year))
+        print("\033[32mSuccessfully Created EPW Files for " + str(year) + "\033[0m")
     except: 
         print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that " + city + "'s " +
               months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
