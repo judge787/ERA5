@@ -308,11 +308,18 @@ GMT = -5
 city = "Guelph"
 province = "ON"
 location = f"{city}, {province}"
-print(location)
+
+startYear = 2017
+endYear = 2017
+difference = endYear - startYear + 1
+totalCount = 0
+print(f"\033[34mProcessing EPW Files for {location} for years {startYear} to {endYear}...\033[0m\n")
+
+
 
 #IMPORTANT: For a range of years 1980-1999 please enter range(1980,2000)
 #IMPORTANT: For only a single year, for example 1980, please enter range(1980,1981)
-for year in range(1990, 1991):
+for year in range(startYear, endYear + 1):
 
     # # Testing to see if i can speed up the process
 
@@ -345,9 +352,13 @@ for year in range(1990, 1991):
         successCount += 1
         write_epw(str(year)+"-12-01",str(year)+"-12-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Nov"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Dec"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Dec.nc",location + "/ERA5/ERA5_"+str(year)+"_Dec.nc",1,8023)
         successCount += 1
+        totalCount += 1
         print("\033[32mSuccessfully Created EPW Files for " + str(year) + "\033[0m")
     except: 
         print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that " + city + "'s " +
               months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
-        
+if totalCount == difference:
+   print(f"\n\033[32mSuccessfully Created {totalCount}/{difference} you can now proceed to fixData.py\033[0m ")
+else:
+    print(f"\n\033[31mOnly Created EPW Files for {totalCount}/{difference} years, please process the missing files before you can proceed to fixData.py\033[0m ")
         

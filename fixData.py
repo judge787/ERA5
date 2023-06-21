@@ -1,17 +1,20 @@
 import os
 
 # Set the city variable to "London"
-city = "Montreal"
-province = "QC"
-lat = "45.69"
-lon = "-74.10"
+city = "Guelph"
+province = "ON"
+lat = "43.60"
+lon = "-80.50"
 first = "0.5,,,,"
 second = "1.0,,,,"
 third = "1.5,,,,"
 timeOffset = "-5.0"
 
+location = f"{city}, {province}"
+print(location)
+
 def replaceDays(start, end):
-    output_file_path = f"Modified EPW Files/ERA5_{city}_Dec{year}.epw"
+    output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
     with open(output_file_path, 'r') as output_file:
         # Read the lines of the file into a list
         lines = output_file.readlines()
@@ -35,7 +38,7 @@ def replaceDays(start, end):
         output_file.writelines(lines)
 
 def replaceDaysTwoDigits(start, end):
-    output_file_path = f"Modified EPW Files/ERA5_{city}_Dec{year}.epw"
+    output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
     # with open(output_file_path, 'r') as output_file:
     #     # Read the lines of the file into a list
     #     lines = output_file.readlines()
@@ -66,15 +69,15 @@ def replaceDaysTwoDigits(start, end):
         output_file.writelines(lines)
 
 
-for year in range(1980, 2000):
+for year in range(2007, 2021):
     # Define the paths to the input and output files for the current year
-    input_file_path = f"EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
-    output_file_path = f"Modified EPW Files/ERA5_{city}_Dec{year}.epw"
-    output_original_path = f"EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
+    input_file_path = f"{location}/EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
+    output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
+    output_original_path = f"{location}/EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
 
     # Check if the output directory exists, and create it if it doesn't
-    if not os.path.exists(f"Modified EPW Files"):
-        os.makedirs(f"Modified EPW Files")
+    if not os.path.exists(f"{location}/Modified EPW Files"):
+        os.makedirs(f"{location}/Modified EPW Files")
 
     # Open the input EPW file for reading
     with open(input_file_path, 'r') as input_file:
