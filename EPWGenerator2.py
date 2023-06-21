@@ -248,9 +248,9 @@ timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,656
 '''
 # Toronto
 # '''
-lat_rural = -45.69
-lon_rural = -74.10
-GMT = -5
+# lat_rural = -45.69
+# lon_rural = -74.10
+# GMT = -5
 # For cities west of UK the starting row for writing data is as follows,
 # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
 # timeInitial = 8023 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
@@ -301,42 +301,49 @@ red_color_code = "\033[91m"
 reset_color_code = "\033[0m"
 
 months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+months_abbreviated = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+lat_rural = -45.69
+lon_rural = -74.10
+GMT = -5 
+city = "Guelph"
+province = "ON"
+location = f"{city}, {province}"
+print(location)
 
 #IMPORTANT: For a range of years 1980-1999 please enter range(1980,2000)
 #IMPORTANT: For only a single year, for example 1980, please enter range(1980,1981)
 for year in range(1990, 1991):
-    city = "Guelph" 
 
     # # Testing to see if i can speed up the process
 
     # Create the subdirectory if it doesn't exist
-    if not os.path.exists("EPW Files/" + str(year)):
-        os.makedirs("EPW Files/"+str(year))
+    if not os.path.exists(location + "/EPW Files/" + str(year)):
+        os.makedirs(location + "/EPW Files/"+str(year))
     try:
         successCount = 0
-        write_epw(str(year)+"-01-01",str(year)+"-01-31",lat_rural,lon_rural,GMT,"rawEPW.epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Jan"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Jan.nc","ERA5/ERA5_"+str(year)+"_Jan.nc",1,8)
+        write_epw(str(year)+"-01-01",str(year)+"-01-31",lat_rural,lon_rural,GMT,"rawEPW.epw", location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jan"+str(year)+".epw", location + "/ERA5Land/ERA5Land_"+str(year)+"_Jan.nc", location + "/ERA5/ERA5_"+str(year)+"_Jan.nc",1,8)
         successCount += 1
-        write_epw(str(year)+"-02-01",str(year)+"-02-28",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Jan"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Feb"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Feb.nc","ERA5/ERA5_"+str(year)+"_Feb.nc",1,752)
+        write_epw(str(year)+"-02-01",str(year)+"-02-28",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jan"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Feb"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Feb.nc",location + "/ERA5/ERA5_"+str(year)+"_Feb.nc",1,752)
         successCount += 1
-        write_epw(str(year)+"-03-01",str(year)+"-03-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Feb"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Mar"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Mar.nc","ERA5/ERA5_"+str(year)+"_Mar.nc",1,1424)
+        write_epw(str(year)+"-03-01",str(year)+"-03-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Feb"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Mar"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Mar.nc",location + "/ERA5/ERA5_"+str(year)+"_Mar.nc",1,1424)
         successCount += 1
-        write_epw(str(year)+"-04-01",str(year)+"-04-30",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Mar"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Apr"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Apr.nc","ERA5/ERA5_"+str(year)+"_Apr.nc",1,2168)
+        write_epw(str(year)+"-04-01",str(year)+"-04-30",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Mar"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Apr"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Apr.nc",location + "/ERA5/ERA5_"+str(year)+"_Apr.nc",1,2168)
         successCount += 1
-        write_epw(str(year)+"-05-01",str(year)+"-05-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Apr"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_May"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_May.nc","ERA5/ERA5_"+str(year)+"_May.nc",1,2888)
+        write_epw(str(year)+"-05-01",str(year)+"-05-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Apr"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_May"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_May.nc",location + "/ERA5/ERA5_"+str(year)+"_May.nc",1,2888)
         successCount += 1
-        write_epw(str(year)+"-06-01",str(year)+"-06-30",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_May"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Jun"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Jun.nc","ERA5/ERA5_"+str(year)+"_Jun.nc",1,3632)
+        write_epw(str(year)+"-06-01",str(year)+"-06-30",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_May"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jun"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Jun.nc",location + "/ERA5/ERA5_"+str(year)+"_Jun.nc",1,3632)
         successCount += 1
-        write_epw(str(year)+"-07-01",str(year)+"-07-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Jun"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Jul"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Jul.nc","ERA5/ERA5_"+str(year)+"_Jul.nc",1,4352)
+        write_epw(str(year)+"-07-01",str(year)+"-07-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jun"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jul"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Jul.nc",location + "/ERA5/ERA5_"+str(year)+"_Jul.nc",1,4352)
         successCount += 1
-        write_epw(str(year)+"-08-01",str(year)+"-08-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Jul"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Aug"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Aug.nc","ERA5/ERA5_"+str(year)+"_Aug.nc",1,5096)
+        write_epw(str(year)+"-08-01",str(year)+"-08-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jul"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Aug"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Aug.nc",location + "/ERA5/ERA5_"+str(year)+"_Aug.nc",1,5096)
         successCount += 1  
-        write_epw(str(year)+"-09-01",str(year)+"-09-30",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Aug"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Sep"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Sep.nc","ERA5/ERA5_"+str(year)+"_Sep.nc",1,5840)
+        write_epw(str(year)+"-09-01",str(year)+"-09-30",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Aug"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Sep"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Sep.nc",location + "/ERA5/ERA5_"+str(year)+"_Sep.nc",1,5840)
         successCount += 1  
-        write_epw(str(year)+"-10-01",str(year)+"-10-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Sep"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Oct"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Oct.nc","ERA5/ERA5_"+str(year)+"_Oct.nc",1,6560)
+        write_epw(str(year)+"-10-01",str(year)+"-10-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Sep"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Oct"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Oct.nc",location + "/ERA5/ERA5_"+str(year)+"_Oct.nc",1,6560)
         successCount += 1    
-        write_epw(str(year)+"-11-01",str(year)+"-11-30",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Oct"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Nov"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Nov.nc","ERA5/ERA5_"+str(year)+"_Nov.nc",1,7304)
+        write_epw(str(year)+"-11-01",str(year)+"-11-30",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Oct"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Nov"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Nov.nc",location + "/ERA5/ERA5_"+str(year)+"_Nov.nc",1,7304)
         successCount += 1
-        write_epw(str(year)+"-12-01",str(year)+"-12-31",lat_rural,lon_rural,GMT,"EPW Files/"+str(year)+"/ERA5_"+city+"_Nov"+str(year)+".epw","EPW Files/"+str(year)+"/ERA5_"+city+"_Dec"+str(year)+".epw","ERA5Land/ERA5Land_"+str(year)+"_Dec.nc","ERA5/ERA5_"+str(year)+"_Dec.nc",1,8023)
+        write_epw(str(year)+"-12-01",str(year)+"-12-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Nov"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Dec"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Dec.nc",location + "/ERA5/ERA5_"+str(year)+"_Dec.nc",1,8023)
         successCount += 1
         print("\033[32mSuccessfully Created EPW Files for " + str(year) + "\033[0m")
     except: 
