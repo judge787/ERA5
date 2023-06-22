@@ -328,8 +328,10 @@ for year in range(startYear, endYear + 1):
         os.makedirs(location + "/EPW Files/"+str(year))
     try:
         successCount = 0
+        rawEPWcheck = 0
         write_epw(str(year)+"-01-01",str(year)+"-01-31",lat_rural,lon_rural,GMT,"rawEPW.epw", location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jan"+str(year)+".epw", location + "/ERA5Land/ERA5Land_"+str(year)+"_Jan.nc", location + "/ERA5/ERA5_"+str(year)+"_Jan.nc",1,8)
         successCount += 1
+        rawEPWcheck = 1
         write_epw(str(year)+"-02-01",str(year)+"-02-28",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Jan"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Feb"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Feb.nc",location + "/ERA5/ERA5_"+str(year)+"_Feb.nc",1,752)
         successCount += 1
         write_epw(str(year)+"-03-01",str(year)+"-03-31",lat_rural,lon_rural,GMT,location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Feb"+str(year)+".epw",location + "/EPW Files/"+str(year)+"/ERA5_"+city+"_Mar"+str(year)+".epw",location + "/ERA5Land/ERA5Land_"+str(year)+"_Mar.nc",location + "/ERA5/ERA5_"+str(year)+"_Mar.nc",1,1424)
@@ -355,7 +357,11 @@ for year in range(startYear, endYear + 1):
         totalCount += 1
         print("\033[32mSuccessfully Created EPW Files for " + str(year) + "\033[0m")
     except: 
-        print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that " + city + "'s " +
+        if rawEPWcheck == 0:
+            print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that rawEPW.epw is in the current working directory or please check if " + city + "'s " +
+              months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
+        else:
+            print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that " + city + "'s " +
               months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
 if totalCount == difference:
    print(f"\n\033[32mSuccessfully Created {totalCount}/{difference} you can now proceed to fixData.py\033[0m ")
