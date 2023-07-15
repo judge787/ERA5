@@ -302,15 +302,15 @@ reset_color_code = "\033[0m"
 
 months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 months_abbreviated = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-lat_rural = -45.69
-lon_rural = -74.10
-GMT = -5 
-city = "Guelph"
-province = "ON"
+lat_rural = 51.0
+lon_rural = -114.5
+GMT = -7
+city = "Calgary"
+province = "AB"
 location = f"{city}, {province}"
 
-startYear = 2017
-endYear = 2017
+startYear = 2007
+endYear = 2011
 difference = endYear - startYear + 1
 totalCount = 0
 print(f"\033[34mProcessing EPW Files for {location} for years {startYear} to {endYear}...\033[0m\n")

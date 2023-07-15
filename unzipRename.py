@@ -89,5 +89,9 @@ def unzip_files_in_directory(directory):
     print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
 
 # Usage example
-directory_path = 'ERA5Land'  # Specify the path to your directory
+city = "Calgary"
+province = "AB"
+location = f"{city}, {province}"
+
+directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
 unzip_files_in_directory(directory_path)
