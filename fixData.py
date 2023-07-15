@@ -1,16 +1,18 @@
 import os
 
 # Set the city variable to "London"
-city = "Guelph"
-province = "ON"
-lat = "43.60"
-lon = "-80.50"
+
+lat = "51.0"
+lon = "-114.5"
 first = "0.5,,,,"
 second = "1.0,,,,"
 third = "1.5,,,,"
-timeOffset = "-5.0"
+timeOffset = "-7.0"
 
+city = "Calgary"
+province = "AB"
 location = f"{city}, {province}"
+
 print(location)
 
 def replaceDays(start, end):
