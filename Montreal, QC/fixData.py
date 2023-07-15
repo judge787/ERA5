@@ -1,14 +1,14 @@
 import os
 
 # Set the city variable to "London"
-city = "Montreal"
-province = "QC"
-lat = "45.69"
-lon = "-74.10"
+city = "Calgary"
+province = "AB"
+lat = "51.0"
+lon = "-114.5"
 first = "0.5,,,,"
 second = "1.0,,,,"
 third = "1.5,,,,"
-timeOffset = "-5.0"
+timeOffset = "-7.0"
 
 def replaceDays(start, end):
     output_file_path = f"Modified EPW Files/ERA5_{city}_Dec{year}.epw"

@@ -49,7 +49,7 @@ def print_in_green(message):
     print('\033[92m' + message + '\033[0m')
 
 print("\nWelcome to the ERA5 Processor. This program has two options, please enter 1 or 2 to run the program: \n\n1. Generate EPW files from ERA5 data\n2. Fix EPW Dataa")
-programChoice = int(input("Choose 1 or 2: "))
+programChoice = int(input("\nEnter 1 or 2: "))
 
 if programChoice == 1:
 
@@ -554,10 +554,10 @@ if programChoice == 2:
             lines[4346:4352] = lines[4322:4328]
             lines[5090:5096] = lines[5066:5072]
             lines[5834:5840] = lines[5810:5816]
-            lines[6554:6560] = lines[6530:6536]
+            lines[6552:6560] = lines[6528:6536]
             lines[7298:7304] = lines[7274:7280]
             lines[8018:8024] = lines[7994:8000]
-            lines[8761:8788]= lines[8737:8744]
+            lines[8759:8788]= lines[8735:8744]
             # Open the output EPW file for writing
             with open(output_file_path, 'w') as output_file:
                 # Write the modified lines back to the file
@@ -579,7 +579,7 @@ if programChoice == 2:
             replaceDaysTwoDigits(8018, 8024) #November
             replaceDaysTwoDigits(8761, 8768) #December
 
-            print_in_green(f"EPW File for {city}, {province} for the year {year} has been modified (fixed).\n")
+            # print_in_green(f"EPW File for {city}, {province} for the year {year} has been modified (fixed).\n")
         
-    fix_epw_files(1980, 1999)
-    fix_epw_files(2007, 2020)
+    fix_epw_files(1980, 1999) #call the function for the years 1981 to 1999
+    fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
