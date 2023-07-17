@@ -26,14 +26,15 @@ from netCDF4 import Dataset
 '''
 startYear = 2013
 endYear = 2013
-lat_rural = 60.5
-lat = "60.5"
-lon_rural = -134.9
-lon = "-134.9"
-GMT = -8
-timeOffset = "-8.0"
-city = "Whitehorse"
-province = "YT"
+lat_rural = 47.19    #latitude
+# lat = "47.19"
+lat = str(lat_rural) #converts lat to string of the variable lat_rural
+lon_rural = -53.19   #longitude
+lon = str(lon_rural) #converts lon to string of the variable lon_rural
+GMT = -4
+timeOffset = "-4.0"
+city = "St. Johns"
+province = "NL"
 location = f"{city}, {province}"
 
 def print_in_red(message):
@@ -544,40 +545,40 @@ if programChoice == 2:
             with open(output_file_path, 'r') as input_file:
             #Read the lines of the file into a list
                 lines = input_file.readlines()
-
-            # Replace lines 747-752 with the contents of lines 723-728
-            lines[744:752] = lines[720:728]
-            lines[1416:1424] = lines[1392:1400]
-            lines[2160:2168] = lines[2136:2144]
-            lines[2880:2888] = lines[2856:2864]
-            lines[3624:3632] = lines[3600:3608]
-            lines[4344:4352] = lines[4320:4328]
-            lines[5088:5096] = lines[5064:5072]
-            lines[5832:5840] = lines[5808:5816]
-            lines[6552:6560] = lines[6528:6536]
-            lines[7296:7304] = lines[7272:7280]
-            lines[8016:8024] = lines[7992:8000]
-            lines[8759:8768]= lines[8735:8744]
+            adjustment = 1
+            # Replace lines 743 - adjustment -752 with the contents of lines 720-728
+            lines[744 - adjustment:752] = lines[720 - adjustment :728]
+            lines[1416 - adjustment :1424] = lines[1392 - adjustment :1400]
+            lines[2160 - adjustment :2168] = lines[2136 - adjustment :2144]
+            lines[2880 - adjustment :2888] = lines[2856 - adjustment :2864]
+            lines[3624 - adjustment :3632] = lines[3600 - adjustment :3608]
+            lines[4344 - adjustment :4352] = lines[4320 - adjustment :4328]
+            lines[5088 - adjustment :5096] = lines[5064 - adjustment :5072]
+            lines[5832 - adjustment :5840] = lines[5808 - adjustment :5816]
+            lines[6552 - adjustment :6560] = lines[6528 - adjustment :6536]
+            lines[7296 - adjustment :7304] = lines[7272 - adjustment :7280]
+            lines[8016 - adjustment :8024] = lines[7992 - adjustment :8000]
+            lines[8759 - adjustment :8768]= lines[8735 - adjustment :8744]
             # Open the output EPW file for writing
             with open(output_file_path, 'w') as output_file:
                 # Write the modified lines back to the file
                 output_file.writelines(lines)
 
             # call the replaceDays function for months that are single digits 
-            replaceDays(744, 752) #January
-            replaceDays(1416, 1424) #Feburary
-            replaceDays(2160, 2168) #March
-            replaceDays(2880, 2888) #April
-            replaceDays(3624, 3632) #May
-            replaceDays(4344, 4352) #June
-            replaceDays(5088, 5096) #July
-            replaceDays(5832, 5840) #August
-            replaceDays(6552, 6560) #September
+            replaceDays(744 - adjustment , 752) #January
+            replaceDays(1416 - adjustment , 1424) #Feburary
+            replaceDays(2160 - adjustment , 2168) #March
+            replaceDays(2880 - adjustment , 2888) #April
+            replaceDays(3624 - adjustment , 3632) #May
+            replaceDays(4344 - adjustment , 4352) #June
+            replaceDays(5088 - adjustment , 5096) #July
+            replaceDays(5832 - adjustment , 5840) #August
+            replaceDays(6552 - adjustment , 6560) #September
 
             #call the replaceDays function for months that are double digits
-            replaceDaysTwoDigits(7296, 7304) #October
-            replaceDaysTwoDigits(8016, 8024) #November
-            replaceDaysTwoDigits(8759, 8768) #December
+            replaceDaysTwoDigits(7296 - adjustment , 7304) #October
+            replaceDaysTwoDigits(8016 - adjustment , 8024) #November
+            replaceDaysTwoDigits(8759 - adjustment , 8768) #December
 
             # print_in_green(f"EPW File for {city}, {province} for the year {year} has been modified (fixed).\n")
         
