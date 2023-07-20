@@ -26,16 +26,17 @@ import cdsapi
 from netCDF4 import Dataset
 '''
 startYear = 2007
-endYear = 2020
-lat_rural = 47.19    #latitude
+endYear = 2007
+lat_rural = 63.93   #latitude
 lat = str(lat_rural) #converts lat to string of the variable lat_rural
-lon_rural = -53.19   #longitude
+lon_rural = -68.83   #longitude
 lon = str(lon_rural) #converts lon to string of the variable lon_rural
 GMT = -4
 timeOffset = "-4.0"
-city = "St. John's"
-province = "NL"
+city = "Iqaluit"
+province = "NU"
 location = f"{city}, {province}"
+
 
 def print_in_red(message):
     print("\033[91m" + message + "\033[0m")
@@ -49,8 +50,8 @@ def print_in_blue(message):
 def print_in_green(message):
     print('\033[92m' + message + '\033[0m')
 
-print("\nWelcome to the ERA5 Processor. This program has two options, please enter 1 or 2 to run the program: \n\n1. Generate EPW files from ERA5 data\n2. Fix EPW Dataa")
-programChoice = int(input("\nEnter 1 or 2: "))
+print("\nWelcome to the ERA5 Processor. This program has three options, please enter 1,2, or 3 to run the program: \n\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files")
+programChoice = int(input("\nEnter 1, 2 or 3: "))
 
 if programChoice == 1:
 
@@ -626,11 +627,6 @@ if programChoice == 3:
                     print(f"File not found: {file_path}")
 
         print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
-
-    # Usage example
-    city = "St. John's"
-    province = "NL"
-    location = f"{city}, {province}"
 
     directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
     unzip_files_in_directory(directory_path)
