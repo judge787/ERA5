@@ -23,8 +23,6 @@ endYears = [1985, 1990, 1994, 1999, 2011, 2016, 2020]
 # choice 2 = request ERA5 land data
 # choice 3 = download data er5
 # choice 4 = download data era5 land
-# choice 5 = view requests
-# choice 6 = request ERA5 land data for years 1980-1999 and 2007-2011
 
 downloadButtonStartingNumber = 240
 
@@ -518,81 +516,6 @@ if choice == 3 or choice == 4:# code for downloading the requests data
                     # print (f"Length of new name:{len(new_name)}, old name length: {len(latest_file)}")  
             except:
                 print_in_red(f"Error with {months[j]} {years[outerIndex]}")
-
-if choice == 5:
-    print_in_blue(f"Viewing requests for {emailAddress}")
-    browser.get(urlRequests)
-    login()
-    time.sleep(1200)
-    sys.exit(0)
-
-if choice == 6:
-    print_in_blue(f"Requesting ERA5Land Data for 1980-1999 and 2007-2011 for {northCoordinate}N {westCoordinate}W {southCoordinate}S {eastCoordinate}E\n")
-    for i in range(0, 7):
-        browser.get(urlEra5Land)
-        emailAddress = emailAddressesLand[i]
-        login()
-        setUpERA5LandRequest()
-        
-        startYear = startYears[i]
-        endYear = endYears[i]
-        years = list(range(startYear, endYear + 1))
-
-        offsetYearPathNumber = startYear - 1939
-
-        offsetYearPathNumber = 41
-        difference = startYear - 1980
-        offsetYearPathNumber = offsetYearPathNumber + difference
-        yearsPath = []
-        amountOfYears = endYear - startYear + 1
-        for i in range(amountOfYears):
-            yearsPath.append(f'//*[@id="year"]/div[2]/label[{offsetYearPathNumber + i}]/input')
-
-        print_in_yellow("review documentation guide and ensure all values are checked ")
-        print("\nPlease enter y when you have selected the three above options.")
-        confirmation = input()
-        if confirmation == 'y' or 'Y':
-            click('request', requestPath)
-            click('selectDeleteAllRequests', selectDeleteAllRequestsPath)
-            click('delete', deletePath)
-            click('confirm delete january duplicate', confirmDeletePath)
-        
-            for i in range(startYears[i], endYears[i] + 1):
-                index += 1
-            
-                for j in range(0, 12): 
-                
-                    browser.get(urlEra5Land)
-                    
-                    if j == 0:
-                        click('clearAllYears', yearsClearAllERA5Land)
-                        click(years[index], yearsPath[index])
-                    
-                    click('clearAllMonths', monthsClearAllERA5Land)
-                    click(months[j], monthsPaths[j])
-
-                    if j == 2  or j == 4 or j == 6 or j == 9 or j ==11:
-                        try:
-                            click('selectAllDays', daysSelectAllPathERA5Land)
-                        except:
-                            print(f"Days select all not found for {months[j]} {years[index]}")
-                    
-                    try:
-                        request = WebDriverWait(browser, 10).until(
-                            EC.presence_of_element_located((By.XPATH, requestPath))
-                        )
-                        request.click()
-                        print_in_green(f"Requested {months[j]} {years[index]}")
-                    except:
-                        print_in_red(f"Request not found for {months[j]} {years[index]}")
-
-        # browser.get(urlEra5Land)
-        # click('dec', monthsPaths[11])
-        # click('selectAllDaysERA5Land', daysSelectAllPathERA5Land)
-        # click('request', requestPath)
-        print_in_yellow("\nPlease check the requests page to ensure all requests have been submitted correctly")
-        time.sleep(60)
-        sys.exit(0)
     
 
 
