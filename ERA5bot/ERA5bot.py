@@ -26,12 +26,7 @@ endYears = [1985, 1990, 1994, 1999, 2011, 2016, 2020]
 # choice 5 = view requests
 # choice 6 = request ERA5 land data for years 1980-1999 and 2007-2011
 
-city = "Winnipeg"
-province = "MB"
-location = f"{city}, {province}"
-
 downloadButtonStartingNumber = 240
-
 
 group = 1
 
@@ -89,8 +84,6 @@ if group == 9:
     endYear = 2020
     choice = 2
 
-# emailAddress = era5proc01@gmail.com
-#password = Era5processor1!
 emailAddressesLand = ['jashanjudge87@gmail.com', 'jashanjudge2002@gmail.com', 'ypondatrack@gmail.com', 'judgejrealestate@gmail.com', 'jashangaming@gmail.com', 'jashanjudge246@gmail.com', 'prodjashan@gmail.com']
 
 with open('password.txt', 'r') as file:
@@ -471,8 +464,7 @@ if choice == 2:
 
 if choice == 3 or choice == 4:# code for downloading the requests data
     requestPage()
-    if choice == 3: #ADD a new function for the thrid part 
-        print_in_yellow("PLEASE ENSURE that the downlaoding start number is correct")
+    if choice == 3:
         print_in_blue(f"\n3. Downloading ERA5 Data for {startYear} to {endYear} for {northCoordinate}N {westCoordinate}W {southCoordinate}S {eastCoordinate}E\n")
     if choice == 4:
         print_in_blue(f"\n4. Downloading ERA5Land Data for {startYear} to {endYear} for {northCoordinate}N {westCoordinate}W {southCoordinate}S {eastCoordinate}E\n")
@@ -512,9 +504,6 @@ if choice == 3 or choice == 4:# code for downloading the requests data
                 if choice == 3:  # Get the new file name
                     new_name = f'ERA5_{years[outerIndex]}_{monthsName[j]}.nc'
                     if success == 1 and not latest_file.endswith('.DS_Store') and len(latest_file)>50: #took away the latest file ==/.nc
-                        # with zipfile.ZipFile(latest_file, 'r') as zip_ref:
-                        #      zip_ref.extractall(os.path.dirname(latest_file))
-                        
                         os.rename(latest_file, os.path.join(os.path.dirname(latest_file), new_name))
                         print_in_blue(f"Renamed {latest_file} to {new_name}")
                     else:
@@ -527,7 +516,6 @@ if choice == 3 or choice == 4:# code for downloading the requests data
                     else:
                         print_in_red(f"Error with renaming or downloading {months[j]} {years[outerIndex]}, latest file: {latest_file}, success: {success}")
                     # print (f"Length of new name:{len(new_name)}, old name length: {len(latest_file)}")  
-                time.sleep(180)
             except:
                 print_in_red(f"Error with {months[j]} {years[outerIndex]}")
 
