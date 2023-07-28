@@ -402,263 +402,270 @@ while True:
             else:
                 print(f"\n\033[31mOnly Created EPW Files for {totalCount}/{difference} years, please process the missing files before you can proceed to fixData.py\033[0m ")
             
-elif programChoice == 2:
-   # Set the city variable to "London"
-    # city = "Guelph"
-    # province = "ON"
-    # lat = "43.60"
-    # lon = "-80.50"
-    first = "0.5,,,,"
-    second = "1.0,,,,"
-    third = "1.5,,,,"
-  
-    def fix_epw_files(startYear, endYear):
-        def replaceDays(start, end):
-            output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
-            with open(output_file_path, 'r') as output_file:
-                # Read the lines of the file into a list
-                lines = output_file.readlines()
-
-            # Get the line to copy from
-            line_to_copy = lines[start - 1]
-
-            # Loop through the specified lines
-            for i in range(start, end):
-                # Get the line to modify
-                line_to_modify = lines[i]
-
-                # Replace the 8th and 9th characters with the corresponding characters from line 745
-                line_to_modify = line_to_modify[:7] + line_to_copy[7:9] + line_to_modify[9:]
-
-                # Write the modified line back to the list
-                lines[i] = line_to_modify
-            
-            with open(output_file_path, 'w') as output_file:
-                # Write the modified lines back to the file
-                output_file.writelines(lines)
-
-        def replaceDaysTwoDigits(start, end):
-            output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
-            # with open(output_file_path, 'r') as output_file:
-            #     # Read the lines of the file into a list
-            #     lines = output_file.readlines()
-
-            # with open(output_file_path, 'w') as output_file:
-            #     # Write the unmodified lines back to the file
-            #     output_file.writelines(lines)
-
-            with open(output_file_path, 'r') as output_file:
-                lines = output_file.readlines()
-
-            # Get the line to copy from
-            line_to_copy = lines[start - 1]
-
-            # Loop through the specified lines
-            for i in range(start, end):
-                # Get the line to modify
-                line_to_modify = lines[i]
-
-                # Replace the 8th and 9th characters with the corresponding characters from line 745
-                line_to_modify = line_to_modify[:8] + line_to_copy[8:10] + line_to_modify[10:]
-
-                # Write the modified line back to the list
-                lines[i] = line_to_modify
-            
-            with open(output_file_path, 'w') as output_file:
-                # Write the modified lines back to the file
-                output_file.writelines(lines)
-
-        print_in_blue(f"\nFixing EPW Files for {city}, {province} for the years {startYear} to {endYear}, GMT = {timeOffset}, lat = {lat}, lon = {lon}\n")
-        for year in range(startYear, endYear + 1):
-            # Define the paths to the input and output files for the current year
-            input_file_path = f"{location}/EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
-            output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
-            output_original_path = f"{location}/EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
-
-            # Check if the output directory exists, and create it if it doesn't
-            if not os.path.exists(f"{location}/Modified EPW Files"):
-                os.makedirs(f"{location}/Modified EPW Files")
-
-            # Open the input EPW file for reading
-            with open(input_file_path, 'r') as input_file:
-                # Read the lines of the file into a list
-                lines = input_file.readlines()
-
-            # Get the first line of the file
-            first_line = lines[0]
-
-            # Split the line into a list of values
-            values = first_line.split(',')
-
-            # Replace the 2nd value with the value of the city variable
-            values[1] = city
-            # Replace the 3rd value with the value of the province variable
-            values[2] = province
-            # Replace the 7th value with the value of the lat variable
-            values[6] = lat
-            # Replace the 8th value with the value of the lon variable
-            values[7] = lon
-            # Replace the 9th value with the value of the timeOffset variable
-            values[8] = timeOffset
-
-
-            # Join the list of values back into a string
-            first_line = ','.join(values)
-
-            # Write the modified first line back to the list
-            lines[0] = first_line
-            # Iterate over the range of years from 1981 to 1999
-
-
-            if 'H' in lines[3]:
-                # Find the index of the character 'H' in line 4
-                index = lines[3].index('H')
-                # Insert a newline after the character 'H'
-                lines[3] = lines[3][:index] + '\n' + lines[3][index:]
-            # else:
-            #     print("H not found.")
-
-            if "0.035,,,," in lines[3]:
-                # Replace "0.035,,,," with the value of the first variable
-                lines[3] = lines[3].replace("0.035,,,,", first)
-            # else:
-            #     print("Variable 1 not found.")
-            
-            if "0.175,,,," in lines[3]:
-                # Replace "0.175,,,," with the value of the second variable
-                lines[3] = lines[3].replace("0.175,,,,", second)
-            # else:
-                # print("Variable 2 not found.")
-
-            if "0.64,,,," in lines[3]:
-                # Replace "0.64,,,," with the value of the third variable
-                lines[3] = lines[3].replace("0.64,,,,", third)
-            # else:
-                # print("Variable 3 not found.")
-
-
-
-            with open(output_file_path, 'w') as output_file:
-                # Write the modified lines back to the file
-                output_file.writelines(lines)
-
-            # with open(output_file_path, 'r') as output_file:
-            #     # Read the lines of the file into a list
-            #     lines = output_file.readlines()
-
-            with open(output_file_path, 'r') as input_file:
-            #Read the lines of the file into a list
-                lines = input_file.readlines()
-            adjustment = 0
-            adjustment = adjustment - GMT
-            # Replace lines 743 - adjustment -752 with the contents of lines 720-728
-            # lines[744 - adjustment:752] = lines[720 - adjustment :728]
-            # lines[1416 - adjustment :1424] = lines[1392 - adjustment :1400]
-            # lines[2160 - adjustment :2168] = lines[2136 - adjustment :2144]
-            # lines[2880 - adjustment :2888] = lines[2856 - adjustment :2864]
-            # lines[3624 - adjustment :3632] = lines[3600 - adjustment :3608]
-            # lines[4344 - adjustment :4352] = lines[4320 - adjustment :4328]
-            # lines[5088 - adjustment :5096] = lines[5064 - adjustment :5072]
-            # lines[5832 - adjustment :5840] = lines[5808 - adjustment :5816]
-            # lines[6552 - adjustment :6560] = lines[6528 - adjustment :6536]
-            # lines[7296 - adjustment :7304] = lines[7272 - adjustment :7280]
-            # lines[8016 - adjustment :8024] = lines[7992 - adjustment :8000]
-            # lines[8759 - adjustment :8768]= lines[8735 - adjustment :8744]
-
-            lines[746 - adjustment:752] = lines[722 - adjustment :728]
-            lines[1418 - adjustment :1424] = lines[1394 - adjustment :1400]
-            lines[2162 - adjustment :2168] = lines[2138 - adjustment :2144]
-            lines[2882 - adjustment :2888] = lines[2858 - adjustment :2864]
-            lines[3626 - adjustment :3632] = lines[3602 - adjustment :3608]
-            lines[4346 - adjustment :4352] = lines[4322 - adjustment :4328]
-            lines[5090 - adjustment :5096] = lines[5066 - adjustment :5072]
-            lines[5834 - adjustment :5840] = lines[5810 - adjustment :5816]
-            lines[6554 - adjustment :6560] = lines[6530 - adjustment :6536]
-            lines[7298 - adjustment :7304] = lines[7274 - adjustment :7280]
-            lines[8018 - adjustment :8024] = lines[7994 - adjustment :8000]
-            lines[8761 - adjustment :8768]= lines[8737 - adjustment :8744]
-            # Open the output EPW file for writing
-            with open(output_file_path, 'w') as output_file:
-                # Write the modified lines back to the file
-                output_file.writelines(lines)
-
-            # # call the replaceDays function for months that are single digits 
-            # replaceDays(744 - adjustment , 752) #January
-            # replaceDays(1416 - adjustment , 1424) #Feburary
-            # replaceDays(2160 - adjustment , 2168) #March
-            # replaceDays(2880 - adjustment , 2888) #April
-            # replaceDays(3624 - adjustment , 3632) #May
-            # replaceDays(4344 - adjustment , 4352) #June
-            # replaceDays(5088 - adjustment , 5096) #July
-            # replaceDays(5832 - adjustment , 5840) #August
-            # replaceDays(6552 - adjustment , 6560) #September
-
-            # #call the replaceDays function for months that are double digits
-            # replaceDaysTwoDigits(7296 - adjustment , 7304) #October
-            # replaceDaysTwoDigits(8016 - adjustment , 8024) #November
-            # replaceDaysTwoDigits(8759 - adjustment , 8768) #December
-
-            replaceDays(746 - adjustment , 752) #January
-            replaceDays(1418 - adjustment , 1424) #Feburary
-            replaceDays(2162 - adjustment , 2168) #March
-            replaceDays(2882 - adjustment , 2888) #April
-            replaceDays(3626 - adjustment , 3632) #May
-            replaceDays(4346 - adjustment , 4352) #June
-            replaceDays(5090 - adjustment , 5096) #July
-            replaceDays(5834 - adjustment , 5840) #August
-            replaceDays(6554 - adjustment , 6560) #September
-
-            #call the replaceDays function for months that are double digits
-            replaceDaysTwoDigits(7298 - adjustment , 7304) #October
-            replaceDaysTwoDigits(8018 - adjustment , 8024) #November
-            replaceDaysTwoDigits(8761 - adjustment , 8768) #December
-
-            # print_in_green(f"EPW File for {city}, {province} for the year {year} has been modified (fixed).\n")
+        elif programChoice == "2":
+         
+        # Set the city variable to "London"
+            # city = "Guelph"
+            # province = "ON"
+            # lat = "43.60"
+            # lon = "-80.50"
+            first = "0.5,,,,"
+            second = "1.0,,,,"
+            third = "1.5,,,,"
         
-    fix_epw_files(1980, 1999) #call the function for the years 1981 to 1999
-    fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
+            def fix_epw_files(startYear, endYear):
+                def replaceDays(start, end):
+                    output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
+                    with open(output_file_path, 'r') as output_file:
+                        # Read the lines of the file into a list
+                        lines = output_file.readlines()
 
-if programChoice == 3:
-    def unzip_files_in_directory(directory):
-        count = 0
-        for file_name in os.listdir(directory):
-            if file_name.endswith('.zip') and not file_name.startswith('._'):
-                file_path = os.path.join(directory, file_name)
-                try:
-                    with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                        # Extract the contents into a new subdirectory with the same name as the ZIP file
-                        zip_ref.extractall(os.path.join(directory, os.path.splitext(file_name)[0]))
+                    # Get the line to copy from
+                    line_to_copy = lines[start - 1]
 
-                    # Rename the extracted file to match the ZIP file name
-                    extracted_file_name = os.path.splitext(file_name)[0] + ".nc"
-                    extracted_file_path = os.path.join(directory, extracted_file_name)
+                    # Loop through the specified lines
+                    for i in range(start, end):
+                        # Get the line to modify
+                        line_to_modify = lines[i]
+
+                        # Replace the 8th and 9th characters with the corresponding characters from line 745
+                        line_to_modify = line_to_modify[:7] + line_to_copy[7:9] + line_to_modify[9:]
+
+                        # Write the modified line back to the list
+                        lines[i] = line_to_modify
                     
-                    print(f"\n{count + 1}. Extracted file name: {extracted_file_name} and path: {extracted_file_path}")
+                    with open(output_file_path, 'w') as output_file:
+                        # Write the modified lines back to the file
+                        output_file.writelines(lines)
 
-                    # Find the extracted file and rename it
-                    extracted_files = [f for f in os.listdir(os.path.join(directory, os.path.splitext(file_name)[0])) if f.endswith('.nc')]
-                    print(f"Second extraction: {extracted_files}")
-                    if len(extracted_files) > 0:
-                        count += 1
-                        for extracted_file in extracted_files:
-                            extracted_file_old_path = os.path.join(directory, os.path.splitext(file_name)[0], extracted_file)
-                            os.rename(extracted_file_old_path, extracted_file_path)
-                            print(f"Renamed file: {extracted_file} to {extracted_file_name}")
-                            print(f"Unzipped and renamed file: {file_name}")
-                    else:
-                        print(f"No extracted file found for: {file_name}")
+                def replaceDaysTwoDigits(start, end):
+                    output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
+                    # with open(output_file_path, 'r') as output_file:
+                    #     # Read the lines of the file into a list
+                    #     lines = output_file.readlines()
 
-                    # Delete the subdirectory
-                    subdirectory_path = os.path.join(directory, os.path.splitext(file_name)[0])
-                    os.rmdir(subdirectory_path)
-                    print(f"Deleted subdirectory: {subdirectory_path}")
+                    # with open(output_file_path, 'w') as output_file:
+                    #     # Write the unmodified lines back to the file
+                    #     output_file.writelines(lines)
 
-                except zipfile.BadZipFile:
-                    print(f"Skipping file: {file_name} (not a valid ZIP file)")
-                except FileNotFoundError:
-                    print(f"File not found: {file_path}")
+                    with open(output_file_path, 'r') as output_file:
+                        lines = output_file.readlines()
 
-        print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
+                    # Get the line to copy from
+                    line_to_copy = lines[start - 1]
 
-    directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
-    unzip_files_in_directory(directory_path)
+                    # Loop through the specified lines
+                    for i in range(start, end):
+                        # Get the line to modify
+                        line_to_modify = lines[i]
+
+                        # Replace the 8th and 9th characters with the corresponding characters from line 745
+                        line_to_modify = line_to_modify[:8] + line_to_copy[8:10] + line_to_modify[10:]
+
+                        # Write the modified line back to the list
+                        lines[i] = line_to_modify
+                    
+                    with open(output_file_path, 'w') as output_file:
+                        # Write the modified lines back to the file
+                        output_file.writelines(lines)
+
+                print_in_blue(f"\nFixing EPW Files for {city}, {province} for the years {startYear} to {endYear}, GMT = {timeOffset}, lat = {lat}, lon = {lon}\n")
+                for year in range(startYear, endYear + 1):
+                    # Define the paths to the input and output files for the current year
+                    input_file_path = f"{location}/EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
+                    output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
+                    output_original_path = f"{location}/EPW Files/{year}/ERA5_{city}_Dec{year}.epw"
+
+                    # Check if the output directory exists, and create it if it doesn't
+                    if not os.path.exists(f"{location}/Modified EPW Files"):
+                        os.makedirs(f"{location}/Modified EPW Files")
+
+                    # Open the input EPW file for reading
+                    with open(input_file_path, 'r') as input_file:
+                        # Read the lines of the file into a list
+                        lines = input_file.readlines()
+
+                    # Get the first line of the file
+                    first_line = lines[0]
+
+                    # Split the line into a list of values
+                    values = first_line.split(',')
+
+                    # Replace the 2nd value with the value of the city variable
+                    values[1] = city
+                    # Replace the 3rd value with the value of the province variable
+                    values[2] = province
+                    # Replace the 7th value with the value of the lat variable
+                    values[6] = lat
+                    # Replace the 8th value with the value of the lon variable
+                    values[7] = lon
+                    # Replace the 9th value with the value of the timeOffset variable
+                    values[8] = timeOffset
+
+
+                    # Join the list of values back into a string
+                    first_line = ','.join(values)
+
+                    # Write the modified first line back to the list
+                    lines[0] = first_line
+                    # Iterate over the range of years from 1981 to 1999
+
+
+                    if 'H' in lines[3]:
+                        # Find the index of the character 'H' in line 4
+                        index = lines[3].index('H')
+                        # Insert a newline after the character 'H'
+                        lines[3] = lines[3][:index] + '\n' + lines[3][index:]
+                    # else:
+                    #     print("H not found.")
+
+                    if "0.035,,,," in lines[3]:
+                        # Replace "0.035,,,," with the value of the first variable
+                        lines[3] = lines[3].replace("0.035,,,,", first)
+                    # else:
+                    #     print("Variable 1 not found.")
+                    
+                    if "0.175,,,," in lines[3]:
+                        # Replace "0.175,,,," with the value of the second variable
+                        lines[3] = lines[3].replace("0.175,,,,", second)
+                    # else:
+                        # print("Variable 2 not found.")
+
+                    if "0.64,,,," in lines[3]:
+                        # Replace "0.64,,,," with the value of the third variable
+                        lines[3] = lines[3].replace("0.64,,,,", third)
+                    # else:
+                        # print("Variable 3 not found.")
+
+
+
+                    with open(output_file_path, 'w') as output_file:
+                        # Write the modified lines back to the file
+                        output_file.writelines(lines)
+
+                    # with open(output_file_path, 'r') as output_file:
+                    #     # Read the lines of the file into a list
+                    #     lines = output_file.readlines()
+
+                    with open(output_file_path, 'r') as input_file:
+                    #Read the lines of the file into a list
+                        lines = input_file.readlines()
+                    adjustment = 0
+                    adjustment = adjustment - GMT
+                    # Replace lines 743 - adjustment -752 with the contents of lines 720-728
+                    # lines[744 - adjustment:752] = lines[720 - adjustment :728]
+                    # lines[1416 - adjustment :1424] = lines[1392 - adjustment :1400]
+                    # lines[2160 - adjustment :2168] = lines[2136 - adjustment :2144]
+                    # lines[2880 - adjustment :2888] = lines[2856 - adjustment :2864]
+                    # lines[3624 - adjustment :3632] = lines[3600 - adjustment :3608]
+                    # lines[4344 - adjustment :4352] = lines[4320 - adjustment :4328]
+                    # lines[5088 - adjustment :5096] = lines[5064 - adjustment :5072]
+                    # lines[5832 - adjustment :5840] = lines[5808 - adjustment :5816]
+                    # lines[6552 - adjustment :6560] = lines[6528 - adjustment :6536]
+                    # lines[7296 - adjustment :7304] = lines[7272 - adjustment :7280]
+                    # lines[8016 - adjustment :8024] = lines[7992 - adjustment :8000]
+                    # lines[8759 - adjustment :8768]= lines[8735 - adjustment :8744]
+
+                    lines[746 - adjustment:752] = lines[722 - adjustment :728]
+                    lines[1418 - adjustment :1424] = lines[1394 - adjustment :1400]
+                    lines[2162 - adjustment :2168] = lines[2138 - adjustment :2144]
+                    lines[2882 - adjustment :2888] = lines[2858 - adjustment :2864]
+                    lines[3626 - adjustment :3632] = lines[3602 - adjustment :3608]
+                    lines[4346 - adjustment :4352] = lines[4322 - adjustment :4328]
+                    lines[5090 - adjustment :5096] = lines[5066 - adjustment :5072]
+                    lines[5834 - adjustment :5840] = lines[5810 - adjustment :5816]
+                    lines[6554 - adjustment :6560] = lines[6530 - adjustment :6536]
+                    lines[7298 - adjustment :7304] = lines[7274 - adjustment :7280]
+                    lines[8018 - adjustment :8024] = lines[7994 - adjustment :8000]
+                    lines[8761 - adjustment :8768]= lines[8737 - adjustment :8744]
+                    # Open the output EPW file for writing
+                    with open(output_file_path, 'w') as output_file:
+                        # Write the modified lines back to the file
+                        output_file.writelines(lines)
+
+                    # # call the replaceDays function for months that are single digits 
+                    # replaceDays(744 - adjustment , 752) #January
+                    # replaceDays(1416 - adjustment , 1424) #Feburary
+                    # replaceDays(2160 - adjustment , 2168) #March
+                    # replaceDays(2880 - adjustment , 2888) #April
+                    # replaceDays(3624 - adjustment , 3632) #May
+                    # replaceDays(4344 - adjustment , 4352) #June
+                    # replaceDays(5088 - adjustment , 5096) #July
+                    # replaceDays(5832 - adjustment , 5840) #August
+                    # replaceDays(6552 - adjustment , 6560) #September
+
+                    # #call the replaceDays function for months that are double digits
+                    # replaceDaysTwoDigits(7296 - adjustment , 7304) #October
+                    # replaceDaysTwoDigits(8016 - adjustment , 8024) #November
+                    # replaceDaysTwoDigits(8759 - adjustment , 8768) #December
+
+                    replaceDays(746 - adjustment , 752) #January
+                    replaceDays(1418 - adjustment , 1424) #Feburary
+                    replaceDays(2162 - adjustment , 2168) #March
+                    replaceDays(2882 - adjustment , 2888) #April
+                    replaceDays(3626 - adjustment , 3632) #May
+                    replaceDays(4346 - adjustment , 4352) #June
+                    replaceDays(5090 - adjustment , 5096) #July
+                    replaceDays(5834 - adjustment , 5840) #August
+                    replaceDays(6554 - adjustment , 6560) #September
+
+                    #call the replaceDays function for months that are double digits
+                    replaceDaysTwoDigits(7298 - adjustment , 7304) #October
+                    replaceDaysTwoDigits(8018 - adjustment , 8024) #November
+                    replaceDaysTwoDigits(8761 - adjustment , 8768) #December
+
+                    # print_in_green(f"EPW File for {city}, {province} for the year {year} has been modified (fixed).\n")
+                
+            fix_epw_files(1980, 1999) #call the function for the years 1981 to 1999
+            fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
+
+    elif programChoice == 3:
+        def unzip_files_in_directory(directory):
+            count = 0
+            for file_name in os.listdir(directory):
+                if file_name.endswith('.zip') and not file_name.startswith('._'):
+                    file_path = os.path.join(directory, file_name)
+                    try:
+                        with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                            # Extract the contents into a new subdirectory with the same name as the ZIP file
+                            zip_ref.extractall(os.path.join(directory, os.path.splitext(file_name)[0]))
+
+                        # Rename the extracted file to match the ZIP file name
+                        extracted_file_name = os.path.splitext(file_name)[0] + ".nc"
+                        extracted_file_path = os.path.join(directory, extracted_file_name)
+                        
+                        print(f"\n{count + 1}. Extracted file name: {extracted_file_name} and path: {extracted_file_path}")
+
+                        # Find the extracted file and rename it
+                        extracted_files = [f for f in os.listdir(os.path.join(directory, os.path.splitext(file_name)[0])) if f.endswith('.nc')]
+                        print(f"Second extraction: {extracted_files}")
+                        if len(extracted_files) > 0:
+                            count += 1
+                            for extracted_file in extracted_files:
+                                extracted_file_old_path = os.path.join(directory, os.path.splitext(file_name)[0], extracted_file)
+                                os.rename(extracted_file_old_path, extracted_file_path)
+                                print(f"Renamed file: {extracted_file} to {extracted_file_name}")
+                                print(f"Unzipped and renamed file: {file_name}")
+                        else:
+                            print(f"No extracted file found for: {file_name}")
+
+                        # Delete the subdirectory
+                        subdirectory_path = os.path.join(directory, os.path.splitext(file_name)[0])
+                        os.rmdir(subdirectory_path)
+                        print(f"Deleted subdirectory: {subdirectory_path}")
+
+                    except zipfile.BadZipFile:
+                        print(f"Skipping file: {file_name} (not a valid ZIP file)")
+                    except FileNotFoundError:
+                        print(f"File not found: {file_path}")
+
+            print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
+
+        directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
+        unzip_files_in_directory(directory_path)
+
+    elif programChoice.lower() == "exit":
+        exit()
+    else:
+        print("Invalid input. Please try again.")
+    # The menu will keep running until the user types "exit" or the program is exited using the exit() function
