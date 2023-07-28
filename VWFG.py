@@ -51,7 +51,7 @@ def print_in_green(message):
     print('\033[92m' + message + '\033[0m')
 
 while True:
-    print_in_blue(f"\nStart Year:{startYear}, End Year:{endYear}, Latitude:{lat_rural}, Longitude:{lon_rural}, GMT:{GMT}, Location:{location}")
+    print_in_blue(f"\nStart Year:{startYear}, End Year:{endYear}, Lat:{lat_rural}, Long:{lon_rural}, GMT:{GMT}, for {location}")
     print("\nWelcome to the ERA5 Processor. This program has three options, please enter 1,2, or 3 to run the program: \n\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files")
     programChoice = input("\nEnter 1, 2 or 3: ")
     if programChoice in ["1", "2", "3"]:
@@ -619,53 +619,53 @@ while True:
             fix_epw_files(1980, 1999) #call the function for the years 1981 to 1999
             fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
 
-    elif programChoice == 3:
-        def unzip_files_in_directory(directory):
-            count = 0
-            for file_name in os.listdir(directory):
-                if file_name.endswith('.zip') and not file_name.startswith('._'):
-                    file_path = os.path.join(directory, file_name)
-                    try:
-                        with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                            # Extract the contents into a new subdirectory with the same name as the ZIP file
-                            zip_ref.extractall(os.path.join(directory, os.path.splitext(file_name)[0]))
+        elif programChoice == 3:
+            def unzip_files_in_directory(directory):
+                count = 0
+                for file_name in os.listdir(directory):
+                    if file_name.endswith('.zip') and not file_name.startswith('._'):
+                        file_path = os.path.join(directory, file_name)
+                        try:
+                            with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                                # Extract the contents into a new subdirectory with the same name as the ZIP file
+                                zip_ref.extractall(os.path.join(directory, os.path.splitext(file_name)[0]))
 
-                        # Rename the extracted file to match the ZIP file name
-                        extracted_file_name = os.path.splitext(file_name)[0] + ".nc"
-                        extracted_file_path = os.path.join(directory, extracted_file_name)
-                        
-                        print(f"\n{count + 1}. Extracted file name: {extracted_file_name} and path: {extracted_file_path}")
+                            # Rename the extracted file to match the ZIP file name
+                            extracted_file_name = os.path.splitext(file_name)[0] + ".nc"
+                            extracted_file_path = os.path.join(directory, extracted_file_name)
+                            
+                            print(f"\n{count + 1}. Extracted file name: {extracted_file_name} and path: {extracted_file_path}")
 
-                        # Find the extracted file and rename it
-                        extracted_files = [f for f in os.listdir(os.path.join(directory, os.path.splitext(file_name)[0])) if f.endswith('.nc')]
-                        print(f"Second extraction: {extracted_files}")
-                        if len(extracted_files) > 0:
-                            count += 1
-                            for extracted_file in extracted_files:
-                                extracted_file_old_path = os.path.join(directory, os.path.splitext(file_name)[0], extracted_file)
-                                os.rename(extracted_file_old_path, extracted_file_path)
-                                print(f"Renamed file: {extracted_file} to {extracted_file_name}")
-                                print(f"Unzipped and renamed file: {file_name}")
-                        else:
-                            print(f"No extracted file found for: {file_name}")
+                            # Find the extracted file and rename it
+                            extracted_files = [f for f in os.listdir(os.path.join(directory, os.path.splitext(file_name)[0])) if f.endswith('.nc')]
+                            print(f"Second extraction: {extracted_files}")
+                            if len(extracted_files) > 0:
+                                count += 1
+                                for extracted_file in extracted_files:
+                                    extracted_file_old_path = os.path.join(directory, os.path.splitext(file_name)[0], extracted_file)
+                                    os.rename(extracted_file_old_path, extracted_file_path)
+                                    print(f"Renamed file: {extracted_file} to {extracted_file_name}")
+                                    print(f"Unzipped and renamed file: {file_name}")
+                            else:
+                                print(f"No extracted file found for: {file_name}")
 
-                        # Delete the subdirectory
-                        subdirectory_path = os.path.join(directory, os.path.splitext(file_name)[0])
-                        os.rmdir(subdirectory_path)
-                        print(f"Deleted subdirectory: {subdirectory_path}")
+                            # Delete the subdirectory
+                            subdirectory_path = os.path.join(directory, os.path.splitext(file_name)[0])
+                            os.rmdir(subdirectory_path)
+                            print(f"Deleted subdirectory: {subdirectory_path}")
 
-                    except zipfile.BadZipFile:
-                        print(f"Skipping file: {file_name} (not a valid ZIP file)")
-                    except FileNotFoundError:
-                        print(f"File not found: {file_path}")
+                        except zipfile.BadZipFile:
+                            print(f"Skipping file: {file_name} (not a valid ZIP file)")
+                        except FileNotFoundError:
+                            print(f"File not found: {file_path}")
 
-            print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
+                print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
 
-        directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
-        unzip_files_in_directory(directory_path)
+            directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
+            unzip_files_in_directory(directory_path)
 
-    elif programChoice.lower() == "exit":
-        exit()
-    else:
-        print("Invalid input. Please try again.")
-    # The menu will keep running until the user types "exit" or the program is exited using the exit() function
+        elif programChoice.lower() == "exit":
+            exit()
+        else:
+            print("Invalid input. Please try again.")
+        # The menu will keep running until the user types "exit" or the program is exited using the exit() function
