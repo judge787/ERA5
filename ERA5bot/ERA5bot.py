@@ -9,24 +9,27 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException, NoSuchElementException, TimeoutException
 
-northCoordinate = 50.17
-southCoordinate = 49.66
-westCoordinate = -98.22
-eastCoordinate = -97.36
-# startYear = 2007
-# endYear = 2011
+northCoordinate = 52.33
+southCoordinate = 51.88
+westCoordinate = -107.77
+eastCoordinate = -106.82
 
-startYears = [1980, 1986, 1991, 1995, 2007, 2012, 2017]
-endYears = [1985, 1990, 1994, 1999, 2011, 2016, 2020]
+city = "Saskatoon"
+province = "AB"
+location = f"{city}, {province}"
 
 # choice 1 = request ERA5 data 
 # choice 2 = request ERA5 land data
 # choice 3 = download data er5
 # choice 4 = download data era5 land
 
-downloadButtonStartingNumber = 240
+city = "Saskatoon"
+province = "AB"
+location = f"{city}, {province}"
 
-group = 1
+downloadButtonStartingNumber = 168
+group = 3
+
 
 if group == 1: 
     emailAddress = 'erajudge771@gmail.com'
@@ -38,7 +41,7 @@ if group == 2:
     emailAddress = 'erajudge772@gmail.com'
     startYear = 2007
     endYear = 2020
-    choice = 1
+    choice = 3
 
 if group == 3: # 87 80-85
     emailAddress = 'jashanjudge87@gmail.com'
