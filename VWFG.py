@@ -25,8 +25,13 @@ import rasterio
 import cdsapi
 from netCDF4 import Dataset
 '''
-startYear = 1980
-endYear = 1985
+
+# For cities west of UK the starting row for writing data is as follows,
+# For cities east of UK add GMT to the initial time, i.e. 8 + GMT
+# timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
+
+startYear = 2007
+endYear = 2020
 lat_rural = 52.16  #latitude
 lat = str(lat_rural) #converts lat to string of the variable lat_rural
 lon_rural = -107.19 #longitude
@@ -51,10 +56,10 @@ def print_in_green(message):
     print('\033[92m' + message + '\033[0m')
 
 while True:
-    print_in_blue(f"\nStart Year:{startYear}, End Year:{endYear}, Lat:{lat_rural}, Long:{lon_rural}, GMT:{GMT}, for {location}")
+    print_in_blue(f"\nFor {startYear} to {endYear}, Lat:{lat_rural}, Long:{lon_rural}, GMT:{GMT}, for {location}")
     print("\nWelcome to the ERA5 Processor. This program has three options, please enter 1,2, or 3 to run the program: \n\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files")
     programChoice = input("\nEnter 1, 2 or 3: ")
-    if programChoice in ["1", "2", "3"]:
+    if programChoice in ["1", "2", "3", "4"]:
         if programChoice == "1":
 
         
@@ -272,19 +277,11 @@ while True:
             # Note: ERA5-land has the spatial resolution of 0.1x0.1 deg and ERA5 has the spatial resolution of 0.25x0.25. lat and lon
             # should be specified carefully to extract data from ERA5 and ERA5-land at the same location.
             # Guelph
-            '''
-            lat_rural = 43.52360
-            lon_rural = -80.10370
-            GMT = -5
+           
             # For cities west of UK the starting row for writing data is as follows,
             # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
-            timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
-            '''
-            # Toronto
-            # '''
-            # lat_rural = -45.69
-            # lon_rural = -74.10
-            # GMT = -5
+            # timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
+            
             # For cities west of UK the starting row for writing data is as follows,
             # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
             # timeInitial = 8023 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
@@ -304,29 +301,7 @@ while True:
             # epw_precision = 1
             # # Starting row at which the new information will be written in the EPW file. Select the appropriate month
 
-
             # write_epw(StartingTime_ERA5,EndingTime_ERA5,lat_rural,lon_rural,GMT,RawEPW_file,NewEPW_file,ERA5land_file,ERA5_file,epw_precision,timeInitial)
-
-            # year = "1980"
-            # city = "Montreal" 
-            # # # Testing to see if i can speed up the process
-
-            # # Create the subdirectory if it doesn't exist
-            # if not os.path.exists("EPW Files/" + year):
-            #     os.makedirs("EPW Files/"+year)
-
-            # write_epw(year+"-01-01",year+"-01-31",lat_rural,lon_rural,GMT,"rawEPW.epw","EPW Files/"+year+"/ERA5_"+city+"_Jan"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jan.nc","ERA5/ERA5_"+year+"_Jan.nc",1,8)
-            # write_epw(year+"-02-01",year+"-02-28",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Jan"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Feb"+year+".epw","ERA5Land/ERA5Land_"+year+"_Feb.nc","ERA5/ERA5_"+year+"_Feb.nc",1,752)
-            # write_epw(year+"-03-01",year+"-03-31",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Feb"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Mar"+year+".epw","ERA5Land/ERA5Land_"+year+"_Mar.nc","ERA5/ERA5_"+year+"_Mar.nc",1,1424)
-            # write_epw(year+"-04-01",year+"-04-30",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Mar"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Apr"+year+".epw","ERA5Land/ERA5Land_"+year+"_Apr.nc","ERA5/ERA5_"+year+"_Apr.nc",1,2168)
-            # write_epw(year+"-05-01",year+"-05-31",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Apr"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_May"+year+".epw","ERA5Land/ERA5Land_"+year+"_May.nc","ERA5/ERA5_"+year+"_May.nc",1,2888)
-            # write_epw(year+"-06-01",year+"-06-30",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_May"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Jun"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jun.nc","ERA5/ERA5_"+year+"_Jun.nc",1,3632)
-            # write_epw(year+"-07-01",year+"-07-31",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Jun"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Jul"+year+".epw","ERA5Land/ERA5Land_"+year+"_Jul.nc","ERA5/ERA5_"+year+"_Jul.nc",1,4352)
-            # write_epw(year+"-08-01",year+"-08-31",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Jul"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Aug"+year+".epw","ERA5Land/ERA5Land_"+year+"_Aug.nc","ERA5/ERA5_"+year+"_Aug.nc",1,5096)
-            # write_epw(year+"-09-01",year+"-09-30",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Aug"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Sep"+year+".epw","ERA5Land/ERA5Land_"+year+"_Sep.nc","ERA5/ERA5_"+year+"_Sep.nc",1,5840)
-            # write_epw(year+"-10-01",year+"-10-31",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Sep"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Oct"+year+".epw","ERA5Land/ERA5Land_"+year+"_Oct.nc","ERA5/ERA5_"+year+"_Oct.nc",1,6560)
-            # write_epw(year+"-11-01",year+"-11-30",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Oct"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Nov"+year+".epw","ERA5Land/ERA5Land_"+year+"_Nov.nc","ERA5/ERA5_"+year+"_Nov.nc",1,7304)
-            # write_epw(year+"-12-01",year+"-12-31",lat_rural,lon_rural,GMT,"EPW Files/"+year+"/ERA5_"+city+"_Nov"+year+".epw","EPW Files/"+year+"/ERA5_"+city+"_Dec"+year+".epw","ERA5Land/ERA5Land_"+year+"_Dec.nc","ERA5/ERA5_"+year+"_Dec.nc",1,8023)
 
             # ANSI escape sequence for red color
             red_color_code = "\033[91m"
@@ -336,20 +311,10 @@ while True:
 
             months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
             months_abbreviated = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-            # lat_rural = 51.0
-            # lon_rural = -114.5
-            # GMT = -7
-            # city = "Calgary"
-            # province = "AB"
-            # location = f"{city}, {province}"
 
-            # startYear = 2019
-            # endYear = 2019
             difference = endYear - startYear + 1
             totalCount = 0
             print(f"\033[34mProcessing EPW Files for {location} for years {startYear} to {endYear}...\033[0m\n")
-
-
 
             #IMPORTANT: For a range of years 1980-1999 please enter range(1980,2000)
             #IMPORTANT: For only a single year, for example 1980, please enter range(1980,1981)
@@ -398,17 +363,11 @@ while True:
                         print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that " + city + "'s " +
                         months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
             if totalCount == difference:
-                print(f"\n\033[32mSuccessfully Created {totalCount}/{difference} you can now proceed to fixData.py\033[0m ")
+                print(f"\n\033[32mSuccessfully Created {totalCount}/{difference} you can now proceed to the next step\033[0m ")
             else:
                 print(f"\n\033[31mOnly Created EPW Files for {totalCount}/{difference} years, please process the missing files before you can proceed to fixData.py\033[0m ")
             
         elif programChoice == "2":
-         
-        # Set the city variable to "London"
-            # city = "Guelph"
-            # province = "ON"
-            # lat = "43.60"
-            # lon = "-80.50"
             first = "0.5,,,,"
             second = "1.0,,,,"
             third = "1.5,,,,"
@@ -440,13 +399,6 @@ while True:
 
                 def replaceDaysTwoDigits(start, end):
                     output_file_path = f"{location}/Modified EPW Files/ERA5_{city}_Dec{year}.epw"
-                    # with open(output_file_path, 'r') as output_file:
-                    #     # Read the lines of the file into a list
-                    #     lines = output_file.readlines()
-
-                    # with open(output_file_path, 'w') as output_file:
-                    #     # Write the unmodified lines back to the file
-                    #     output_file.writelines(lines)
 
                     with open(output_file_path, 'r') as output_file:
                         lines = output_file.readlines()
@@ -538,7 +490,6 @@ while True:
                         # print("Variable 3 not found.")
 
 
-
                     with open(output_file_path, 'w') as output_file:
                         # Write the modified lines back to the file
                         output_file.writelines(lines)
@@ -552,19 +503,6 @@ while True:
                         lines = input_file.readlines()
                     adjustment = 0
                     adjustment = adjustment - GMT
-                    # Replace lines 743 - adjustment -752 with the contents of lines 720-728
-                    # lines[744 - adjustment:752] = lines[720 - adjustment :728]
-                    # lines[1416 - adjustment :1424] = lines[1392 - adjustment :1400]
-                    # lines[2160 - adjustment :2168] = lines[2136 - adjustment :2144]
-                    # lines[2880 - adjustment :2888] = lines[2856 - adjustment :2864]
-                    # lines[3624 - adjustment :3632] = lines[3600 - adjustment :3608]
-                    # lines[4344 - adjustment :4352] = lines[4320 - adjustment :4328]
-                    # lines[5088 - adjustment :5096] = lines[5064 - adjustment :5072]
-                    # lines[5832 - adjustment :5840] = lines[5808 - adjustment :5816]
-                    # lines[6552 - adjustment :6560] = lines[6528 - adjustment :6536]
-                    # lines[7296 - adjustment :7304] = lines[7272 - adjustment :7280]
-                    # lines[8016 - adjustment :8024] = lines[7992 - adjustment :8000]
-                    # lines[8759 - adjustment :8768]= lines[8735 - adjustment :8744]
 
                     lines[746 - adjustment:752] = lines[722 - adjustment :728]
                     lines[1418 - adjustment :1424] = lines[1394 - adjustment :1400]
@@ -583,22 +521,6 @@ while True:
                         # Write the modified lines back to the file
                         output_file.writelines(lines)
 
-                    # # call the replaceDays function for months that are single digits 
-                    # replaceDays(744 - adjustment , 752) #January
-                    # replaceDays(1416 - adjustment , 1424) #Feburary
-                    # replaceDays(2160 - adjustment , 2168) #March
-                    # replaceDays(2880 - adjustment , 2888) #April
-                    # replaceDays(3624 - adjustment , 3632) #May
-                    # replaceDays(4344 - adjustment , 4352) #June
-                    # replaceDays(5088 - adjustment , 5096) #July
-                    # replaceDays(5832 - adjustment , 5840) #August
-                    # replaceDays(6552 - adjustment , 6560) #September
-
-                    # #call the replaceDays function for months that are double digits
-                    # replaceDaysTwoDigits(7296 - adjustment , 7304) #October
-                    # replaceDaysTwoDigits(8016 - adjustment , 8024) #November
-                    # replaceDaysTwoDigits(8759 - adjustment , 8768) #December
-
                     replaceDays(746 - adjustment , 752) #January
                     replaceDays(1418 - adjustment , 1424) #Feburary
                     replaceDays(2162 - adjustment , 2168) #March
@@ -615,57 +537,68 @@ while True:
                     replaceDaysTwoDigits(8761 - adjustment , 8768) #December
 
                     # print_in_green(f"EPW File for {city}, {province} for the year {year} has been modified (fixed).\n")
-                
-            fix_epw_files(1980, 1999) #call the function for the years 1981 to 1999
-            fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
+            try:   
+                fix_epw_files(1980, 1999) #call the function for the years 1981 to 1999
+                fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
+                print_in_green(f"All EPW files for {location} have been modified (fixed).\n")
+            except: 
+                print_in_red("Error: some EPW files not found. Please Ensure taht you have the required files and try again")
 
-        elif programChoice == 3:
-            def unzip_files_in_directory(directory):
-                count = 0
-                for file_name in os.listdir(directory):
-                    if file_name.endswith('.zip') and not file_name.startswith('._'):
-                        file_path = os.path.join(directory, file_name)
-                        try:
-                            with zipfile.ZipFile(file_path, 'r') as zip_ref:
-                                # Extract the contents into a new subdirectory with the same name as the ZIP file
-                                zip_ref.extractall(os.path.join(directory, os.path.splitext(file_name)[0]))
-
-                            # Rename the extracted file to match the ZIP file name
-                            extracted_file_name = os.path.splitext(file_name)[0] + ".nc"
-                            extracted_file_path = os.path.join(directory, extracted_file_name)
-                            
-                            print(f"\n{count + 1}. Extracted file name: {extracted_file_name} and path: {extracted_file_path}")
-
-                            # Find the extracted file and rename it
-                            extracted_files = [f for f in os.listdir(os.path.join(directory, os.path.splitext(file_name)[0])) if f.endswith('.nc')]
-                            print(f"Second extraction: {extracted_files}")
-                            if len(extracted_files) > 0:
-                                count += 1
-                                for extracted_file in extracted_files:
-                                    extracted_file_old_path = os.path.join(directory, os.path.splitext(file_name)[0], extracted_file)
-                                    os.rename(extracted_file_old_path, extracted_file_path)
-                                    print(f"Renamed file: {extracted_file} to {extracted_file_name}")
-                                    print(f"Unzipped and renamed file: {file_name}")
-                            else:
-                                print(f"No extracted file found for: {file_name}")
-
-                            # Delete the subdirectory
-                            subdirectory_path = os.path.join(directory, os.path.splitext(file_name)[0])
-                            os.rmdir(subdirectory_path)
-                            print(f"Deleted subdirectory: {subdirectory_path}")
-
-                        except zipfile.BadZipFile:
-                            print(f"Skipping file: {file_name} (not a valid ZIP file)")
-                        except FileNotFoundError:
-                            print(f"File not found: {file_path}")
-
-                print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
-
-            directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
-            unzip_files_in_directory(directory_path)
-
-        elif programChoice.lower() == "exit":
+        elif programChoice == '3':
+            print_in_green("You have chosen to modify the EPW files for the years 1981 to 1999.\n")
+        
+        elif programChoice == '4':
+            print_in_red("exiting program")
             exit()
-        else:
-            print("Invalid input. Please try again.")
+            # def unzip_files_in_directory(directory):
+            #     count = 0
+            #     for file_name in os.listdir(directory):
+            #         if file_name.endswith('.zip') and not file_name.startswith('._'):
+            #             file_path = os.path.join(directory, file_name)
+            #             try:
+            #                 with zipfile.ZipFile(file_path, 'r') as zip_ref:
+            #                     # Extract the contents into a new subdirectory with the same name as the ZIP file
+            #                     zip_ref.extractall(os.path.join(directory, os.path.splitext(file_name)[0]))
+
+            #                 # Rename the extracted file to match the ZIP file name
+            #                 extracted_file_name = os.path.splitext(file_name)[0] + ".nc"
+            #                 extracted_file_path = os.path.join(directory, extracted_file_name)
+                            
+            #                 print(f"\n{count + 1}. Extracted file name: {extracted_file_name} and path: {extracted_file_path}")
+
+            #                 # Find the extracted file and rename it
+            #                 extracted_files = [f for f in os.listdir(os.path.join(directory, os.path.splitext(file_name)[0])) if f.endswith('.nc')]
+            #                 print(f"Second extraction: {extracted_files}")
+            #                 if len(extracted_files) > 0:
+            #                     count += 1
+            #                     for extracted_file in extracted_files:
+            #                         extracted_file_old_path = os.path.join(directory, os.path.splitext(file_name)[0], extracted_file)
+            #                         os.rename(extracted_file_old_path, extracted_file_path)
+            #                         print(f"Renamed file: {extracted_file} to {extracted_file_name}")
+            #                         print(f"Unzipped and renamed file: {file_name}")
+            #                 else:
+            #                     print(f"No extracted file found for: {file_name}")
+
+            #                 # Delete the subdirectory
+            #                 subdirectory_path = os.path.join(directory, os.path.splitext(file_name)[0])
+            #                 os.rmdir(subdirectory_path)
+            #                 print(f"Deleted subdirectory: {subdirectory_path}")
+
+            #             except zipfile.BadZipFile:
+            #                 print(f"Skipping file: {file_name} (not a valid ZIP file)")
+            #             except FileNotFoundError:
+            #                 print(f"File not found: {file_path}")
+
+            #     print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed
+
+            # directory_path = f"{location}/ERA5Land"  # Specify the path to your directory
+            # unzip_files_in_directory(directory_path)
+            # print_in_green(f"\nAll files in {directory_path} have been unzipped and renamed.\n")
+        
+        # elif programChoice == '4':
+        #  print("Exiting program...")
+        #  exit()
+        # else:
+        #     print_in_red("Invalid input. Please try again.")
+        
         # The menu will keep running until the user types "exit" or the program is exited using the exit() function
