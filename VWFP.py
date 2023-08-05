@@ -38,8 +38,8 @@ lon_rural = -66.48 #longitude
 lon = str(lon_rural) #converts lon to string of the variable lon_rural
 GMT = -3
 timeOffset = "-3.0"
-city = "Saint John"
-province = "NB"
+city = "Charlottetown"
+province = "PE"
 location = f"{city}, {province}"
 
 
