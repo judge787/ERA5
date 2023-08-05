@@ -30,8 +30,8 @@ from netCDF4 import Dataset
 # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
 # timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
 
-startYear = 2016
-endYear = 2016
+startYear = 1990
+endYear = 1990
 lat_rural = 45.27  #latitude
 lat = str(lat_rural) #converts lat to string of the variable lat_rural
 lon_rural = -66.48 #longitude
@@ -57,8 +57,9 @@ def print_in_green(message):
 
 while True:
     print_in_blue(f"\nStartYear: {startYear}\nEndYear: {endYear}\nLat:{lat_rural}, Long:{lon_rural}, GMT:{GMT}\n{location}")
-    print("\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files\n4. Exit the program")
-    programChoice = input("\nEnter 1, 2, 3, or type exit or 4 to exit the program: ")
+    print("\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files\n4. Exit the program\n")
+    programChoice = input("\033[1;33mEnter 1, 2, 3, or 4: \033[0m")
+    # programChoice = input("\033[1;33;91mEnter 1, 2, 3, or 4: \033[0m")
     # if programChoice in ["1", "2", "3", "4"]:
     if programChoice == "1":
 
@@ -355,15 +356,15 @@ while True:
                 print("\033[32mSuccessfully Created EPW Files for " + str(year) + "\033[0m")
             except: 
                 if rawEPWcheck == 0:
-                    print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that rawEPW.epw is in the current working directory or please check if " + city + "'s " +
+                    print(red_color_code + "ERROR: with year" + str(year) + ", please ensure that rawEPW.epw is in the current working directory or please check if " + city + "'s " +
                     months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
                 else:
-                    print(red_color_code + "ERROR: with year " + str(year) + ", please ensure that " + city + "'s " +
+                    print(red_color_code + "ERROR:\nYear: " + str(year) + "\nMonth:" + months[successCount], "\nPlease check if " + city + "'s " +
                     months[successCount] + " ERA5Land and ERA5 data have been named and downloaded correctly and try again." + reset_color_code)
         if totalCount == difference:
-            print(f"\n\033[32mSuccessfully Created {totalCount}/{difference} you can now proceed to the next step\033[0m ")
+            print(f"\n\033[32mSuccessfully Created {totalCount}/{difference} \033[0m ")
         else:
-            print(f"\n\033[31mOnly Created EPW Files for {totalCount}/{difference} years, please process the missing files before you can proceed to fixData.py\033[0m ")
+            print(f"\n\033[31mOnly Created EPW Files for {totalCount}/{difference} years, process the missing files\033[0m ")
         
     elif programChoice == "2":
         first = "0.5,,,,"
