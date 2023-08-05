@@ -30,14 +30,14 @@ from netCDF4 import Dataset
 # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
 # timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
 
-startYear = 1980
-endYear = 1999
+startYear = 2016
+endYear = 2016
 lat_rural = 45.27  #latitude
 lat = str(lat_rural) #converts lat to string of the variable lat_rural
 lon_rural = -66.48 #longitude
 lon = str(lon_rural) #converts lon to string of the variable lon_rural
-GMT = -6
-timeOffset = "-6.0"
+GMT = -3
+timeOffset = "-3.0"
 city = "Saint John"
 province = "NB"
 location = f"{city}, {province}"
@@ -56,8 +56,8 @@ def print_in_green(message):
     print('\033[92m' + message + '\033[0m')
 
 while True:
-    print_in_blue(f"\nFor {startYear} to {endYear}, Lat:{lat_rural}, Long:{lon_rural}, GMT:{GMT}, for {location}")
-    print("\nWelcome to the ERA5 Processor. This program has three options, please enter 1,2, or 3 to run the program: \n\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files\n4. Exit the program")
+    print_in_blue(f"\nStartYear: {startYear}\nEndYear: {endYear}\nLat:{lat_rural}, Long:{lon_rural}, GMT:{GMT}\n{location}")
+    print("\n1. Generate EPW files from ERA5 data\n2. Fix EPW Data\n3. Unzip ERA5Land Files\n4. Exit the program")
     programChoice = input("\nEnter 1, 2, 3, or type exit or 4 to exit the program: ")
     # if programChoice in ["1", "2", "3", "4"]:
     if programChoice == "1":
@@ -540,7 +540,7 @@ while True:
             fix_epw_files(2007, 2020) #call the function for the years 2007 to 2020
             print_in_green(f"All EPW files for {location} have been modified (fixed).\n")
         except: 
-            print_in_red("Error: some EPW files not found. Please Ensure taht you have the required files and try again")
+            print_in_red("Error: some EPW files not found. Please Ensure you have the required files and try again")
 
     elif programChoice == '3':
         # print_in_green("You have chosen to modify the EPW files for the years 1981 to 1999.\n")
