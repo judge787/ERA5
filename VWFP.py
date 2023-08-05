@@ -30,11 +30,11 @@ from netCDF4 import Dataset
 # For cities east of UK add GMT to the initial time, i.e. 8 + GMT
 # timeInitial = 8 # [JFMAMJJASOND] = [8,752,1424,2168,2888,3632,4352,5096,5840,6560,7304,8023]
 
-startYear = 1990
-endYear = 1990
-lat_rural = 45.27  #latitude
+startYear = 2012
+endYear = 2020
+lat_rural = 46.25  #latitude
 lat = str(lat_rural) #converts lat to string of the variable lat_rural
-lon_rural = -66.48 #longitude
+lon_rural = -63.38 #longitude
 lon = str(lon_rural) #converts lon to string of the variable lon_rural
 GMT = -3
 timeOffset = "-3.0"
@@ -594,6 +594,6 @@ while True:
         print_in_red("Exiting program...")
         exit()
     else:
-        print_in_red("Invalid input. Please try again.")
+        print_in_red("\nInvalid input. Please try again.\n - - - - - - - - - - - - - - - ")
     
     # The menu will keep running until the user types "exit" or the program is exited using the exit() function

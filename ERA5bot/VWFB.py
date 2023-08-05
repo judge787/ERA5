@@ -32,8 +32,7 @@ password = 'Era5processor1!'
 
 downloadButtonStartingNumber = 168
 
-group = 3
-
+group = 9
 if group == 1:
     emailAddress = 'era5proc01@gmail.com'
     startYear = 1980
@@ -194,6 +193,16 @@ def click(variable, path):
     except:
         print_in_red(name + " not found")
 
+def click_yellowText(variable, path):
+    name = variable
+    try:
+        variable = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.XPATH, path))
+        )
+        variable.click()
+    except:
+        print_in_yellow(name + " not found")
+
 def inputCoordinates(direction, path, value):
     name = direction
     try:
@@ -276,7 +285,7 @@ def setUpERA5LandRequest():
 def requestPage():
     browser.get(urlRequests)
     login()
-    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\nLocation: {location}")
+    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\n{location}")
     print_in_yellow("\nEnter y when you have deleted all previous requests")
     confirmLand = input()
     if confirmLand.lower() == 'y':
@@ -306,7 +315,7 @@ def get_years_path_land(start_year, end_year):
 
 # #code for choice 1
 if choice == 1:
-    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\nLocation: {location}")
+    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\n{location}")
     browser.get(urlRequests)
     login()
     print_in_yellow("\nEnter y when you have deleted all previous requests")
@@ -334,9 +343,9 @@ if choice == 1:
         confirmation = input()
         if confirmation == 'y' or 'Y':
             click('request', requestPath)
-            click('selectDeleteAllRequests', selectDeleteAllRequestsPath)
-            click('delete january duplicate', deletePath)
-            click('confirm delete january duplicate', confirmDeletePath)
+            click_yellowText('selectDeleteAllRequests', selectDeleteAllRequestsPath)
+            click_yellowText('delete january duplicate', deletePath)
+            click_yellowText('confirm delete january duplicate', confirmDeletePath)
             # print_in_red(f"\nDuplicate request submitted for {months[0]} {years[0]}, make sure you delete the duplicate NOW")
         
             for i in range(startYear, endYear + 1):
@@ -388,7 +397,7 @@ for i in range(amountOfYears):
     yearsPath.append(f'//*[@id="year"]/div[2]/label[{offsetYearPathNumber + i}]/input')
 
 if choice == 2:
-    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\nLocation: {location}")
+    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\n{location}")
     browser.get(urlRequests)
     login()
     print_in_yellow("\nEnter y when you have deleted all previous requests")
@@ -443,7 +452,7 @@ if choice == 2:
             click('request', requestPath)
             click('selectDeleteAllRequests', selectDeleteAllRequestsPath)
             click('deleteAllDeleteRequests', deletePath)
-            click('confirm delete all duplicates', confirmDeletePath)
+            click_yellowText('confirm delete january duplicates', confirmDeletePath)
         
             for i in range(startYear, endYear + 1):
                 index += 1
@@ -481,7 +490,7 @@ if choice == 2:
 
 
 if choice == 3: # code for downloading the requests data
-    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\nLocation: {location}")
+    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\n{location}")
     requestPageDownload()
     
     print_in_blue(f"\nDownloading ERA5 Data for {startYear} to {endYear}\n")
