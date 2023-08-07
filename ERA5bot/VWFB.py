@@ -9,30 +9,27 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException, NoSuchElementException, TimeoutException
 
+city = "Charlottetown" #enter the city 
+province = "PE" #enter the province in abbreviation
+location = f"{city}, {province}" 
 
-# northCoordinate = 62.89
-# southCoordinate = 62.09
-# westCoordinate = -114.11
-# eastCoordinate = -112.20
-
-city = "Charlottetown"
-province = "PE"
-location = f"{city}, {province}"
-
-northCoordinate = 46.38
+#enter all the coordinates
+northCoordinate = 46.38 
 southCoordinate = 46.12
 westCoordinate = -63.60
 eastCoordinate = -63.19
 password = 'Era5processor1!'
 
+downloadButtonStartingNumber = 168 #the number of the first download button on the page, you can find it in the xpath
+
+group = 9 #change the group number to the group number you are working on (different gorups have different years and different logins)
+
 # choice 1 = request ERA5 data 
 # choice 2 = request ERA5 land data
 # choice 3 = download data er5
-# choice 4 = download data era5 land
 
-downloadButtonStartingNumber = 168
 
-group = 9
+#if statements to change the email address, years, and program choice depending on the group number
 if group == 1:
     emailAddress = 'era5proc01@gmail.com'
     startYear = 1980
@@ -88,14 +85,7 @@ if group == 9:
     choice = 2
 
 
-
-
-
-
-emailAddressesLand = ['jashanjudge87@gmail.com', 'jashanjudge2002@gmail.com', 'ypondatrack@gmail.com', 'judgejrealestate@gmail.com', 'jashangaming@gmail.com', 'jashanjudge246@gmail.com', 'prodjashan@gmail.com']
-
-
-
+#paths for the different urls
 urlEra5 = 'https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form'
 urlEra5Land = 'https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=form'
 urlRequests = 'https://cds.climate.copernicus.eu/cdsapp#!/yourrequests'
@@ -123,7 +113,7 @@ monthsPaths = ['//*[@id="month"]/div[2]/label[1]/input', '//*[@id="month"]/div[2
 years = list(range(startYear, endYear + 1))
 # yearPath = '//*[@id="year"]/div[2]/label[41]/input'
 
-offsetYearPathNumber = startYear - 1939
+offsetYearPathNumber = startYear - 1939 
 
 offsetYearPathNumber = 41
 difference = startYear - 1980
@@ -133,8 +123,6 @@ amountOfYears = endYear - startYear + 1
 for i in range(amountOfYears):
     yearsPath.append(f'//*[@id="year"]/div[2]/label[{offsetYearPathNumber + i}]/input')
 
-# for path in yearsPath:
-#     print(path)
 
 daysSelectAllPath = '/html/body/div[1]/div/div/section/div[2]/div/div/div/resource-details/div[1]/div[1]/div[2]/div[2]/div/form-builder/form/div[1]/div[5]/string-list-widget/div/fieldset/string-list-widget-content/div[2]/select-clear-all/div/div/a[1]'
 timeSelectAllPath = '//*[@id="time"]/div[2]/select-clear-all/div/div/a[1]'
@@ -177,13 +165,12 @@ totalPrecipitationPath = '/html/body/div[1]/div/div/section/div[2]/div/div/div/r
 highvegetationPath = '/html/body/div[1]/div/div/section/div[2]/div/div/div/resource-details/div[1]/div[1]/div[2]/div[2]/div/form-builder/form/div[1]/div[1]/string-list-array-widget/div/fieldset/div/div/div/string-list-array-widget-content/div[2]/uib-accordion/div/div[8]/div[2]/div/div/div[1]/label[1]/input'
 lowvegetationPath = '/html/body/div[1]/div/div/section/div[2]/div/div/div/resource-details/div[1]/div[1]/div[2]/div[2]/div/form-builder/form/div[1]/div[1]/string-list-array-widget/div/fieldset/div/div/div/string-list-array-widget-content/div[2]/uib-accordion/div/div[8]/div[2]/div/div/div[1]/label[2]/input'
 selectAllWindPath = '//*[@id="accordiongroup-360-3405-panel"]/div/div/div[2]/a[1]'
-
 year1980Path = '/html/body/div[1]/div/div/section/div[2]/div/div/div/resource-details/div[1]/div[1]/div[2]/div[2]/div/form-builder/form/div[1]/div[2]/string-choice-widget/div/fieldset/div/div/string-choice-widget-content/div[2]/label[31]/input'
 
 browser = webdriver.Chrome()# Create Chrome driver
 
 #functions that are used throught the program 
-def click(variable, path):
+def click(variable, path): #function that clicks on a button
     name = variable
     try:
         variable = WebDriverWait(browser, 10).until(
@@ -193,7 +180,7 @@ def click(variable, path):
     except:
         print_in_red(name + " not found")
 
-def click_yellowText(variable, path):
+def click_yellowText(variable, path): #function that clicks on a button and pritns out a yellow message
     name = variable
     try:
         variable = WebDriverWait(browser, 10).until(
@@ -203,7 +190,7 @@ def click_yellowText(variable, path):
     except:
         print_in_yellow(name + " not found")
 
-def inputCoordinates(direction, path, value):
+def inputCoordinates(direction, path, value): #function that inputs values into a text box
     name = direction
     try:
         direction = WebDriverWait(browser, 10).until(
@@ -214,7 +201,7 @@ def inputCoordinates(direction, path, value):
 
     except:
         print("\033[91m" + name + " input not found\033[0m")
-
+#functions that are used to print out messages in different colors
 def print_in_red(message):
     print("\033[91m" + message + "\033[0m")
 
@@ -343,10 +330,8 @@ if choice == 1:
         confirmation = input()
         if confirmation == 'y' or 'Y':
             click('request', requestPath)
-            click_yellowText('selectDeleteAllRequests', selectDeleteAllRequestsPath)
             click_yellowText('delete january duplicate', deletePath)
-            click_yellowText('confirm delete january duplicate', confirmDeletePath)
-            # print_in_red(f"\nDuplicate request submitted for {months[0]} {years[0]}, make sure you delete the duplicate NOW")
+            click_yellowText('ERROR: confirm delete january duplicate', confirmDeletePath)
         
             for i in range(startYear, endYear + 1):
                 index += 1
@@ -379,9 +364,6 @@ if choice == 1:
                     except:
                         print_in_red(f"Request not found for {months[j]} {years[index]}")
 
-        # print_in_red("Please ensure to delete the duplicate request of the first request now" )
-        # print_in_yellow("\nPlease check the requests page to ensure all requests have been submitted correctly")
-        # print_in_yellow("\nCheck the requests if all requests are correct (there could be a dupllicate january request for the starting year)")
         print_in_yellow("\nCheck the requests if all requests are correct (there could be a dupllicate january request for the first starting year)")
         time.sleep(60)
         sys.exit(0)
@@ -404,7 +386,6 @@ if choice == 2:
     confirmLand = input()
     if confirmLand == 'y' or 'Y':
         print_in_blue(f"Proceeding to the Request Page...\n")
-        # print_in_blue(f"\nRequesting ERA5Land Data for {startYear} to {endYear} for {northCoordinate}N {westCoordinate}W {southCoordinate}S {eastCoordinate}E on {emailAddress} for group: {group}\n")
         browser.get(urlEra5Land) # Navigate to the URL
         click('hideLake', hideLakePath)
         click('hideSnow', hideSnowPath)
@@ -452,7 +433,7 @@ if choice == 2:
             click('request', requestPath)
             click('selectDeleteAllRequests', selectDeleteAllRequestsPath)
             click('deleteAllDeleteRequests', deletePath)
-            click_yellowText('confirm delete january duplicates', confirmDeletePath)
+            click_yellowText('ERROR: confirm delete january duplicates', confirmDeletePath)
         
             for i in range(startYear, endYear + 1):
                 index += 1
@@ -483,7 +464,6 @@ if choice == 2:
                     except:
                         print_in_red(f"Request not found for {months[j]} {years[index]}")
 
-        # print_in_yellow("\nCheck the requests if all requests have been submitted correctly (there could be a dupllicate january request for the starting year)")
         print_in_yellow("\nCheck the requests if all requests are correct (there could be a dupllicate january request for the first starting year)")
         time.sleep(180)
         sys.exit(0)
@@ -506,12 +486,11 @@ if choice == 3: # code for downloading the requests data
         for j in range(0, 12): 
             index += 1
             success = 0
-            # if  index == 0 and (months[j] == 'mar' or months[j] == 'apr' or months[j] == 'may' or months[j] == 'jun' or months[j] == 'jul'):
+
             try:
                 
                 try:
                     time.sleep(4) # Disable implicitly_wait method
-                    # browser.implicitly_wait(0)
                     downloadButton = WebDriverWait(browser, 10).until(
                         EC.presence_of_element_located((By.XPATH, f'//*[@id="cdsapp"]/div/div/table/tbody{[downloadButtonStartingNumber - index]}/tr/td[7]/span/a'))
                     )
