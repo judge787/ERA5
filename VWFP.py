@@ -579,9 +579,9 @@ while True:
                         os.rmdir(subdirectory_path)
                         print(f"Deleted subdirectory: {subdirectory_path}")
 
-                    except zipfile.BadZipFile:
+                    except zipfile.BadZipFile: # If the file is not a valid ZIP file, skip it
                         print(f"Skipping file: {file_name} (not a valid ZIP file)")
-                    except FileNotFoundError:
+                    except FileNotFoundError: # If the file is not found
                         print(f"File not found: {file_path}")
 
             print(f"Total files unzipped and renamed: {count}")  # Print total count of files unzipped and renamed

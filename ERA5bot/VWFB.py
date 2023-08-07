@@ -173,8 +173,8 @@ browser = webdriver.Chrome()# Create Chrome driver
 def click(variable, path): #function that clicks on a button
     name = variable
     try:
-        variable = WebDriverWait(browser, 10).until(
-            EC.presence_of_element_located((By.XPATH, path))
+        variable = WebDriverWait(browser, 10).until( 
+            EC.presence_of_element_located((By.XPATH, path)) 
         )
         variable.click()
     except:
@@ -219,7 +219,7 @@ def login():#function used to login users
 
     click('login', loginPath)
 
-    try:
+    try: #finds the email and password input fields and inputs the values
         email = WebDriverWait(browser, 10).until(
             EC.presence_of_element_located((By.XPATH, '//input[@name="name"]'))
         )
@@ -230,12 +230,12 @@ def login():#function used to login users
         )
         passwordInput.send_keys(password)
 
-    except:
+    except: #if the email or password input fields are not found, print out a message
         print("Email or password input fields not found")
 
     click('loginSubmit', loginSubmitPath)
 
-def setUpERA5LandRequest():
+def setUpERA5LandRequest(): #function that sets up the ERA5-Land request
     click('hideLake', hideLakePath)
     click('hideSnow', hideSnowPath)
     click('hideSoilwater', hideSoilwaterPath)
@@ -269,16 +269,16 @@ def setUpERA5LandRequest():
 
     click('netcdf', netcdfPath)
 
-def requestPage():
+def requestPage(): #function that goes to the request page
     browser.get(urlRequests)
     login()
-    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\n{location}")
+    print_in_blue(f"\nChoice: {choice}\nGroup: {group}\nStart year: {startYear}\nEnd year: {endYear}\n{location}") #prints out the users choices
     print_in_yellow("\nEnter y when you have deleted all previous requests")
     confirmLand = input()
     if confirmLand.lower() == 'y':
         return
     
-def requestPageDownload():
+def requestPageDownload(): #function that goes to the request page to download data
     browser.get(urlRequests)
     login()
     print_in_yellow("\nEnter y when you have changed downloadStartingNumber and restarted the program")
@@ -287,7 +287,7 @@ def requestPageDownload():
         return
     
 
-def get_years_path_land(start_year, end_year):
+def get_years_path_land(start_year, end_year): #function that gets the path for the years
     offset_year_path_number = start_year - 1939
     offset_year_path_number = 31
     difference = start_year - 1980
@@ -306,7 +306,6 @@ if choice == 1:
     browser.get(urlRequests)
     login()
     print_in_yellow("\nEnter y when you have deleted all previous requests")
-    # print_in_yellow("\nPlease enter y OR Y when you have deleted all previous requests if you wish to.")
     confirm = input()
     if confirm == 'y' or 'Y':
         browser.get(urlEra5) # Navigate to the URL
@@ -333,14 +332,12 @@ if choice == 1:
             click_yellowText('delete january duplicate', deletePath)
             click_yellowText('ERROR: confirm delete january duplicate', confirmDeletePath)
         
-            for i in range(startYear, endYear + 1):
+            for i in range(startYear, endYear + 1): #for loop that goes through the years
                 index += 1
-                # print("outer for loop started i = " + str(i))
                 for j in range(0, 12): 
-                    # print("inner for loop started j =" + str(j))
-                    browser.get(urlEra5)
+                    browser.get(urlEra5) # Navigate to the URL to request ERA5 data
                     
-                    if j == 0:
+                    if j == 0: #if the month is january, click the clear all button and then click the right year for years
                         click('clearAllYears', yearsClearAll)
                         click(years[index], yearsPath[index])
                     
@@ -353,8 +350,6 @@ if choice == 1:
                         except:
                             print(f"Days select all not found for {months[j]} {years[index]}")
 
-                    # click('request', requestPath)
-                    # print(f"Request submitted for {months[j]} {years[index]}")
                     try:
                         request = WebDriverWait(browser, 10).until(
                             EC.presence_of_element_located((By.XPATH, requestPath))
@@ -368,7 +363,8 @@ if choice == 1:
         time.sleep(60)
         sys.exit(0)
 
-offsetYearPathNumber = startYear - 1939
+#offset year path number for era5land
+offsetYearPathNumber = startYear - 1939 
 offsetYearPathNumber = 31
 difference = startYear - 1980
 offsetYearPathNumber = offsetYearPathNumber + difference
@@ -399,7 +395,6 @@ if choice == 2:
         click('Soil Temperature Level 3', soilTemperatureLevel3Path)
         click('Surface Solar Radiation Downwards', surfaceSolarRadiationDownwardsPath)
         click('Surface Thermal Radiation Downwards', surfaceThermalRadiationDownwardsPath) 
-        # click('selectallwind', selectAllWindPath)
         click('U wind', uwindPath)
         click('V wind', vWindPath)
         click('Surface Pressure', surfacePressurePath)
@@ -407,10 +402,7 @@ if choice == 2:
         click('High vegetation', highvegetationPath)
         click('Low vegetation', lowvegetationPath)
 
-
-
         click(years[0], yearsPath[0])
-        # print(f"{years[0]} clicked")
         click(months[0], monthsPaths[0])
 
         click('daysSelectAll ERA5 Land', daysSelectAllPathERA5Land)
@@ -424,10 +416,9 @@ if choice == 2:
 
         click('netcdf', netcdfPath)
 
-            # Sleep for 10 minutes
-
         print_in_yellow("review documentation guide and ensure all values are checked ")
-        print("\nPlease enter y when you have selected the three above options.")
+        print("\nPlease enter y when you have selected all the options.")
+
         confirmation = input()
         if confirmation == 'y' or 'Y':
             click('request', requestPath)
@@ -442,14 +433,14 @@ if choice == 2:
                 
                     browser.get(urlEra5Land)
                     
-                    if j == 0:
+                    if j == 0: #if the month is january, click the clear all button and then click the right year for years
                         click('clearAllYears', yearsClearAllERA5Land)
                         click(years[index], yearsPath[index])
                     
                     click('clearAllMonths', monthsClearAllERA5Land)
                     click(months[j], monthsPaths[j])
 
-                    if j == 2  or j == 4 or j == 6 or j == 9 or j ==11:
+                    if j == 2  or j == 4 or j == 6 or j == 9 or j ==11: #these months the program has to select all days beacuse the last month had less days
                         try:
                             click('selectAllDays', daysSelectAllPathERA5Land)
                         except:
@@ -465,8 +456,8 @@ if choice == 2:
                         print_in_red(f"Request not found for {months[j]} {years[index]}")
 
         print_in_yellow("\nCheck the requests if all requests are correct (there could be a dupllicate january request for the first starting year)")
-        time.sleep(180)
-        sys.exit(0)
+        time.sleep(180) #wait 3 minutes before the program closes
+        sys.exit(0) #close the program
 
 
 if choice == 3: # code for downloading the requests data
@@ -475,13 +466,13 @@ if choice == 3: # code for downloading the requests data
     
     print_in_blue(f"\nDownloading ERA5 Data for {startYear} to {endYear}\n")
     
-    browser.get(urlRequests)
+    browser.get(urlRequests) # Navigate to the URL
 
-    index = -1
-    executions = 0
-    outerIndex = -1
+    index = -1 #used for months
+    executions = 0  #redudant variable
+    outerIndex = -1 #used for years
     for i in range(startYear, endYear + 1):
-        outerIndex += 1
+        outerIndex += 1 #used for years
     
         for j in range(0, 12): 
             index += 1
@@ -509,7 +500,7 @@ if choice == 3: # code for downloading the requests data
                 if choice == 3:  # Get the new file name
                     new_name = f'ERA5_{years[outerIndex]}_{monthsName[j]}.nc'
                     if success == 1 and not latest_file.endswith('.DS_Store') and len(latest_file)>50: #took away the latest file ==/.nc
-                        os.rename(latest_file, os.path.join(os.path.dirname(latest_file), new_name))
+                        os.rename(latest_file, os.path.join(os.path.dirname(latest_file), new_name)) # Rename the file
                         print_in_blue(f"Renamed {latest_file} to {new_name}")
                     else:
                         print_in_red(f"Error with renaming or downloading {months[j]} {years[outerIndex]}")
